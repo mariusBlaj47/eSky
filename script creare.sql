@@ -28,7 +28,7 @@ nationality varchar2(20),
 email varchar2(50)
 )
 
-CREATE TABLE BOUGHT(
+CREATE TABLE bought_cards(
 CNP number(13),
 idcard number(3),
 expiration_date date
@@ -41,6 +41,35 @@ discount number(2),
 price number(4),
 validity number(3)
 )
+CREATE TABLE flight(
+id number(5) not null primary key,
+airline_id number(2),
+origin varchar2(50),
+destination varchar2(50),
+departure_date date,
+arrival_date date,
+base_price number(4),
+numer_tickets number(3),
+ensurance_price number(3)
+)
+CREATE TABLE booking(
+id number(7) not null primary key,
+flight_id number(5),
+cnp	number(13),
+airline_id number(2),
+final_price number(4),
+ensurance number(4),
+luggace number(2),
+seat number(3)
+)
+CREATE TABLE airport(
+id number(2) not null primary key,
+name varchar2(50),
+city varchar2(40),
+country varchar2(40)
+)
+
+
 create or replace type vc_arr as table of varchar2(50);
 
 alter session set nls_date_format='dd/mm/yyyy hh:mi:ss pm';
