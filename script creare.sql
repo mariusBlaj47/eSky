@@ -112,7 +112,7 @@ v_price number(2);
 v_validity number(3);
 v_card_name varchar2(25);
 
---Bought
+--Bought_cards
 v_expiration_date DATE;
 
 --Flight
@@ -122,6 +122,12 @@ v_rand_float float;
 v_base_price number(3);
 v_tickets number(3);
 v_ensurance number(2);
+
+--Booking
+v_final_price number(4);
+v_ensurance_pay number(3);
+v_luggage number(2);
+v_seat number(3);
 
 v_rand_val number(10);
 begin
@@ -173,6 +179,8 @@ for v_i in 1..airline_names.count loop
     DBMS_OUTPUT.PUT_LINE(v_card_name||' '||v_discount||' '||v_price||' '||v_validity);
   end loop;
 end loop;
+
+--Bought_cards
 v_expiration_date:=to_date('2019-07-01','yyyy-mm-dd')+trunc(dbms_random.value(1,365));
 
 --Flight
@@ -186,6 +194,13 @@ v_tickets:=dbms_random.value(100,200);
 v_ensurance:=dbms_random.value(30,80);
 DBMS_OUTPUT.PUT_LINE(v_departure_date||' '||v_arrival_date||' '||v_base_price||' '||v_tickets||' '||v_ensurance);
 
+--Booking
+--v_final_price dbms_random.value(50,500);
+--v_ensurance_pay number(3);
+v_luggage:=round(dbms_random.value(1,2))*10;
+v_seat:=100;
+v_seat:=dbms_random.value(1,v_seat);
+DBMS_OUTPUT.PUT_LINE(v_luggage||' '||v_seat);
 end;
 
 //tester
