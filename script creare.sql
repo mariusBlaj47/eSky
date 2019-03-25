@@ -52,9 +52,13 @@ v_airport_city varchar2(20);
 v_airport_country varchar2(20);
 
 --Discount_card
+card_names vc_arr:=vc_arr('Discount Club','Fidelity Club','Priority Club');
+
 v_discount number(2);
 v_price number(2);
 v_validity number(3);
+v_card_name varchar2(25);
+
 
 
 v_rand_val number(5);
@@ -99,10 +103,13 @@ end loop;
 --Discount_card
 DBMS_OUTPUT.PUT_LINE('Inseram '|| airline_names.count*3||' carduri reducere');
 for v_i in 1..airline_names.count loop
-v_discount:=DBMS_RANDOM.VALUE(5,15);
-v_price:=DBMS_RANDOM.VALUE(10,60);
-v_validity:=DBMS_RANDOM.VALUE(180,365);
-DBMS_OUTPUT.PUT_LINE(v_discount||' '||v_price||' '||v_validity);
+  for v_j in 1..3 loop
+    v_card_name:=card_names(v_j);
+    v_discount:=DBMS_RANDOM.VALUE(5,15);
+    v_price:=DBMS_RANDOM.VALUE(10,60);
+    v_validity:=DBMS_RANDOM.VALUE(180,365);
+    DBMS_OUTPUT.PUT_LINE(v_card_name||' '||v_discount||' '||v_price||' '||v_validity);
+  end loop;
 end loop;
 end;
 
