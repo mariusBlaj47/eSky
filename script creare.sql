@@ -20,6 +20,7 @@ nume VARCHAR2(25) NOT NULL UNIQUE
 
 create or replace type vc_arr as table of varchar2(50);
 
+alter session set nls_date_format='dd/mm/yyyy hh:mi:ss pm';
 set serveroutput on;
 
 declare
@@ -62,7 +63,15 @@ v_card_name varchar2(25);
 --Bought
 v_expiration_date DATE;
 
-v_rand_val number(5);
+--Flight
+v_departure_date DATE;
+v_arrival_date DATE;
+v_rand_float float;
+v_base_price number(3);
+v_tickets number(3);
+v_ensurance number(2);
+
+v_rand_val number(10);
 begin
 DBMS_OUTPUT.PUT_LINE('Inserare 1_000_000 pasageri');
 FOR v_i IN 1..1025 LOOP
@@ -113,8 +122,19 @@ for v_i in 1..airline_names.count loop
   end loop;
 end loop;
 v_expiration_date:=to_date('2019-07-01','yyyy-mm-dd')+trunc(dbms_random.value(1,365));
-end;
 
+--Flight
+v_rand_val:=dbms_random.value(10,365);
+v_rand_float:=dbms_random.value(1.00, 24.00);
+v_departure_date:= SYSDATE + v_rand_val + v_rand_float/24;
+v_rand_float:=dbms_random.value(3.00, 8.00);
+v_arrival_date:=v_departure_date+v_rand_float/24;
+v_base_price:=dbms_random.value(50,500);
+v_tickets:=dbms_random.value(100,200);
+v_ensurance:=dbms_random.value(30,80);
+DBMS_OUTPUT.PUT_LINE(v_departure_date||' '||v_arrival_date||' '||v_base_price||' '||v_tickets||' '||v_ensurance);
+
+end;
 
 //tester
 
