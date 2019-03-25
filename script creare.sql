@@ -15,9 +15,32 @@ DROP TABLE AIRPORT CASCADE CONSTRAINTS
 
 CREATE TABLE AIRLINE(
 id INT NOT NULL PRIMARY KEY,
-nume VARCHAR2(25) NOT NULL UNIQUE
+name VARCHAR2(25) NOT NULL UNIQUE
 )
 
+CREATE TABLE PASSENGER(
+CNP number(13) not null primary key,
+first_name varchar2(20),
+last_name varchar2(20),
+gender varchar2(10),
+birth_date date,
+nationality varchar2(20),
+email varchar2(50)
+)
+
+CREATE TABLE BOUGHT(
+CNP number(13),
+idcard number(3),
+expiration_date date
+)
+CREATE TABLE Discount_card(
+id number(3) not null primary key,
+airline_id number(2),
+name varchar2(20),
+discount number(2),
+price number(4),
+validity number(3)
+)
 create or replace type vc_arr as table of varchar2(50);
 
 set serveroutput on;
