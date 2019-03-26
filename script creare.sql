@@ -111,7 +111,7 @@ airline_names vc_arr:=vc_arr('Wizz Air','Blue Air','Ryanair','Turkish Airlines',
 v_airline_name varchar2(40);
 
 --Airport
-airport_names vc_arr:=vc_arr('Henri Coand? International Airport','Iasi International Airport','Avram Iancu International Airport Cluj','Orio al Serio International Airport','Malpensa Airport','Dublin Airport','Brussels Airport','Charles de Gaulle Airport','Barcelona–El Prat Airport','Lisbon Portela Airport','London City Airport','Sofia International Airport','Haneda Airport','John F. Kennedy International Airport','Toronto Pearson International Airport');
+airport_names vc_arr:=vc_arr('Henri Coanda International Airport','Iasi International Airport','Avram Iancu International Airport Cluj','Orio al Serio International Airport','Malpensa Airport','Dublin Airport','Brussels Airport','Charles de Gaulle Airport','Barcelona–El Prat Airport','Lisbon Portela Airport','London City Airport','Sofia International Airport','Haneda Airport','John F. Kennedy International Airport','Toronto Pearson International Airport');
 airport_cities vc_arr:=vc_arr('Bucharest','Iasi','Cluj-Napoca','Milan','Milan','Dublin','Brussel','Paris','Barcelona','Lisbon','London','Sofia','Tokyo','New York City','Mississauga');
 airport_countries vc_arr:=vc_arr('Romania','Romania','Romania','Italia','Italia','Ireland','Belgium','France','Spain','Portugal','United Kingdom','Bulgaria','Japan','New York','Canada');
 
@@ -129,6 +129,8 @@ v_card_name varchar2(25);
 
 --Bought_cards
 v_expiration_date DATE;
+v_contor number(8);
+v_id number(8);
 
 --Flight
 v_departure_date DATE;
@@ -180,7 +182,7 @@ for v_i in 1..airport_names.count loop
 v_airport_name:=airport_names(v_i);
 v_airport_city:=airport_cities(v_i);
 v_airport_country:=airport_countries(v_i);
-DBMS_OUTPUT.PUT_LINE(v_airport_name||' '||v_airport_city||' '||v_airport_country);
+insert into airport values(v_i,v_airport_name,v_airport_city,v_airport_country);
 end loop;
 --Discount_card
 DBMS_OUTPUT.PUT_LINE('Inseram '|| airline_names.count*3||' carduri reducere');
@@ -190,12 +192,22 @@ for v_i in 1..airline_names.count loop
     v_discount:=DBMS_RANDOM.VALUE(5,15);
     v_price:=DBMS_RANDOM.VALUE(10,60);
     v_validity:=DBMS_RANDOM.VALUE(180,365);
-    DBMS_OUTPUT.PUT_LINE(v_card_name||' '||v_discount||' '||v_price||' '||v_validity);
+    insert into discount_card values((v_i-1)*3+v_j,v_i,v_card_name,v_discount,v_price,v_validity);
   end loop;
 end loop;
 
 --Bought_cards
+--for v_i in 1..250 loop
 v_expiration_date:=to_date('2019-07-01','yyyy-mm-dd')+trunc(dbms_random.value(1,365));
+--select count(*)into v_contor from passenger;
+--v_cnp:=dbms_random.value(1,v_contor);
+--DBMS_OUTPUT.PUT_LINE(v_contor);
+--select count(*)into v_contor from discount_card;
+--v_id:=dbms_random.value(1,v_contor);
+insert into bought_cards values(1000000000000,1,v_expiration_date);
+insert into bought_cards values(1000000000001,2,v_expiration_date);
+insert into bought_cards values(1000000000002,3,v_expiration_date);
+--end loop;
 
 --Flight
 v_rand_val:=dbms_random.value(10,365);
@@ -216,279 +228,3 @@ v_seat:=100;
 v_seat:=dbms_random.value(1,v_seat);
 DBMS_OUTPUT.PUT_LINE(v_luggage||' '||v_seat);
 end;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-create or replace type vc_arr as table of varchar2(50);
-
-alter session set nls_date_format='dd/mm/yyyy hh:mi:ss pm';
-set serveroutput on;
-
---endsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsf
-
-SET SERVEROUTPUT ON;
-DECLARE
-  create or replace type vc_arr as table of varchar2(35);
-  first_names varr := varr('Ababei','Acasandrei','Adascalitei','Afanasie','Agafitei','Agape','Aioanei','Alexandrescu','Alexandru','Alexe','Alexii','Amarghioalei','Ambroci','Andonesei','Andrei','Andrian','Andrici','Andronic','Andros','Anghelina','Anita','Antochi','Antonie','Apetrei','Apostol','Arhip','Arhire','Arteni','Arvinte','Asaftei','Asofiei','Aungurenci','Avadanei','Avram','Babei','Baciu','Baetu','Balan','Balica','Banu','Barbieru','Barzu','Bazgan','Bejan','Bejenaru','Belcescu','Belciuganu','Benchea','Bilan','Birsanu','Bivol','Bizu','Boca','Bodnar','Boistean','Borcan','Bordeianu','Botezatu','Bradea','Braescu','Budaca','Bulai','Bulbuc-aioanei','Burlacu','Burloiu','Bursuc','Butacu','Bute','Buza','Calancea','Calinescu','Capusneanu','Caraiman','Carbune','Carp','Catana','Catiru','Catonoiu','Cazacu','Cazamir','Cebere','Cehan','Cernescu','Chelaru','Chelmu','Chelmus','Chibici','Chicos','Chilaboc','Chile','Chiriac','Chirila','Chistol','Chitic','Chmilevski','Cimpoesu','Ciobanu','Ciobotaru','Ciocoiu','Ciofu','Ciornei','Citea','Ciucanu','Clatinici','Clim','Cobuz','Coca','Cojocariu','Cojocaru','Condurache','Corciu','Corduneanu','Corfu','Corneanu','Corodescu','Coseru','Cosnita','Costan','Covatariu','Cozma','Cozmiuc','Craciunas','Crainiceanu','Creanga','Cretu','Cristea','Crucerescu','Cumpata','Curca','Cusmuliuc','Damian','Damoc','Daneliuc','Daniel','Danila','Darie','Dascalescu','Dascalu','Diaconu','Dima','Dimache','Dinu','Dobos','Dochitei','Dochitoiu','Dodan','Dogaru','Domnaru','Dorneanu','Dragan','Dragoman','Dragomir','Dragomirescu','Duceac','Dudau','Durnea','Edu','Eduard','Eusebiu','Fedeles','Ferestraoaru','Filibiu','Filimon','Filip','Florescu','Folvaiter','Frumosu','Frunza','Galatanu','Gavrilita','Gavriliuc','Gavrilovici','Gherase','Gherca','Ghergu','Gherman','Ghibirdic','Giosanu','Gitlan','Giurgila','Glodeanu','Goldan','Gorgan','Grama','Grigore','Grigoriu','Grosu','Grozavu','Gurau','Haba','Harabula','Hardon','Harpa','Herdes','Herscovici','Hociung','Hodoreanu','Hostiuc','Huma','Hutanu','Huzum','Iacob','Iacobuta','Iancu','Ichim','Iftimesei','Ilie','Insuratelu','Ionesei','Ionesi','Ionita','Iordache','Iordache-tiroiu','Iordan','Iosub','Iovu','Irimia','Ivascu','Jecu','Jitariuc','Jitca','Joldescu','Juravle','Larion','Lates','Latu','Lazar','Leleu','Leon','Leonte','Leuciuc','Leustean','Luca','Lucaci','Lucasi','Luncasu','Lungeanu','Lungu','Lupascu','Lupu','Macariu','Macoveschi','Maftei','Maganu','Mangalagiu','Manolache','Manole','Marcu','Marinov','Martinas','Marton','Mataca','Matcovici','Matei','Maties','Matrana','Maxim','Mazareanu','Mazilu','Mazur','Melniciuc-puica','Micu','Mihaela','Mihai','Mihaila','Mihailescu','Mihalachi','Mihalcea','Mihociu','Milut','Minea','Minghel','Minuti','Miron','Mitan','Moisa','Moniry-abyaneh','Morarescu','Morosanu','Moscu','Motrescu','Motroi','Munteanu','Murarasu','Musca','Mutescu','Nastaca','Nechita','Neghina','Negrus','Negruser','Negrutu','Nemtoc','Netedu','Nica','Nicu','Oana','Olanuta','Olarasu','Olariu','Olaru','Onu','Opariuc','Oprea','Ostafe','Otrocol','Palihovici','Pantiru','Pantiruc','Paparuz','Pascaru','Patachi','Patras','Patriche','Perciun','Perju','Petcu','Pila','Pintilie','Piriu','Platon','Plugariu','Podaru','Poenariu','Pojar','Popa','Popescu','Popovici','Poputoaia','Postolache','Predoaia','Prisecaru','Procop','Prodan','Puiu','Purice','Rachieru','Razvan','Reut','Riscanu','Riza','Robu','Roman','Romanescu','Romaniuc','Rosca','Rusu','Samson','Sandu','Sandulache','Sava','Savescu','Schifirnet','Scortanu','Scurtu','Sfarghiu','Silitra','Simiganoschi','Simion','Simionescu','Simionesei','Simon','Sitaru','Sleghel','Sofian','Soficu','Sparhat','Spiridon','Stan','Stavarache','Stefan','Stefanita','Stingaciu','Stiufliuc','Stoian','Stoica','Stoleru','Stolniceanu','Stolnicu','Strainu','Strimtu','Suhani','Tabusca','Talif','Tanasa','Teclici','Teodorescu','Tesu','Tifrea','Timofte','Tincu','Tirpescu','Toader','Tofan','Toma','Toncu','Trifan','Tudosa','Tudose','Tuduri','Tuiu','Turcu','Ulinici','Unghianu','Ungureanu','Ursache','Ursachi','Urse','Ursu','Varlan','Varteniuc','Varvaroi','Vasilache','Vasiliu','Ventaniuc','Vicol','Vidru','Vinatoru','Vlad','Voaides','Vrabie','Vulpescu','Zamosteanu','Zazuleac');
-  lista_prenume_fete varr := varr('Adina','Alexandra','Alina','Ana','Anca','Anda','Andra','Andreea','Andreia','Antonia','Bianca','Camelia','Claudia','Codrina','Cristina','Daniela','Daria','Delia','Denisa','Diana','Ecaterina','Elena','Eleonora','Elisa','Ema','Emanuela','Emma','Gabriela','Georgiana','Ileana','Ilona','Ioana','Iolanda','Irina','Iulia','Iuliana','Larisa','Laura','Loredana','Madalina','Malina','Manuela','Maria','Mihaela','Mirela','Monica','Oana','Paula','Petruta','Raluca','Sabina','Sanziana','Simina','Simona','Stefana','Stefania','Tamara','Teodora','Theodora','Vasilica','Xena');
-  
-  lista_materii_an_1 varr := varr('Logicã', 'Matematicã', 'Introducere în programare', 'Arhitectura calculatoarelor ºi sisteme de operare', 'Sisteme de operare', 'Programare orientatã-obiect', 'Fundamente algebrice ale informaticii', 'Probabilitã?i ºi statisticã');
-  lista_materii_an_2 varr := varr('Re?ele de calculatoare', 'Baze de date', 'Limbaje formale, automate ºi compilatoare', 'Algoritmica grafurilor', 'Tehnologii WEB', 'Programare avansatã', '	Ingineria Programãrii', 'Practicã SGBD');
-  lista_materii_an_3 varr := varr('Învã?are automatã', 'Securitatea informa?iei', 'Inteligen?ã artificialã', 'Practicã - Programare în Python', 'Calcul numeric', 'Graficã pe calculator', 'Managementul clasei de elevi', 'Re?ele Petri ºi aplica?ii');
-  lista_grade_diactice varr := varr('Colaborator','Asistent','Lector','Conferentiar','Profesor');
-      
-  v_nume VARCHAR2(255);
-  v_prenume VARCHAR2(255);
-  v_prenume1 VARCHAR2(255);
-  v_prenume2 VARCHAR2(255);
-  v_matr VARCHAR2(6);
-  v_matr_aux VARCHAR2(6);
-  v_temp int;
-  v_temp1 int;
-  v_temp2 int;
-  v_temp3 int;
-  v_temp_date date;
-  v_an int;
-  v_grupa varchar2(2);
-  v_bursa int;
-  v_data_nastere date;  
-  v_email varchar2(40);
-BEGIN
-  
-   DBMS_OUTPUT.PUT_LINE('Inserarea a 1025 studenti...');
-   FOR v_i IN 1..1025 LOOP
-      --SELECT SUBSTR(NAME, INSTR(NAME,' ')) INTO v_nume FROM (SELECT * FROM USERS WHERE INSTR(NAME,' ')>1 ORDER BY DBMS_RANDOM.RANDOM) WHERE ROWNUM=1;
-      --IF length(v_nume)>20 then v_nume:=substr(v_nume,1,20); end if;
-      v_nume := lista_nume(TRUNC(DBMS_RANDOM.VALUE(0,lista_nume.count))+1);
-      IF (DBMS_RANDOM.VALUE(0,100)<50) THEN      
-         v_prenume1 := lista_prenume_fete(TRUNC(DBMS_RANDOM.VALUE(0,lista_prenume_fete.count))+1);
-         LOOP
-            v_prenume2 := lista_prenume_fete(TRUNC(DBMS_RANDOM.VALUE(0,lista_prenume_fete.count))+1);
-            exit when v_prenume1<>v_prenume2;
-         END LOOP;
-       ELSE
-         v_prenume1 := lista_prenume_baieti(TRUNC(DBMS_RANDOM.VALUE(0,lista_prenume_baieti.count))+1);
-         LOOP
-            v_prenume2 := lista_prenume_baieti(TRUNC(DBMS_RANDOM.VALUE(0,lista_prenume_baieti.count))+1);
-            exit when v_prenume1<>v_prenume2;
-         END LOOP;       
-       END IF;
-     
-     IF (DBMS_RANDOM.VALUE(0,100)<60) THEN  
-        IF LENGTH(v_prenume1 || ' ' || v_prenume2) <= 20 THEN
-          v_prenume := v_prenume1 || ' ' || v_prenume2;
-        END IF;
-        else 
-           v_prenume:=v_prenume1;
-      END IF;       
-       
-      LOOP
-         v_matr := FLOOR(DBMS_RANDOM.VALUE(100,999)) || CHR(FLOOR(DBMS_RANDOM.VALUE(65,91))) || CHR(FLOOR(DBMS_RANDOM.VALUE(65,91))) || FLOOR(DBMS_RANDOM.VALUE(0,9));
-         select count(*) into v_temp from studenti where nr_matricol = v_matr;
-         exit when v_temp=0;
-      END LOOP;
-              
-      LOOP      
-        v_an := TRUNC(DBMS_RANDOM.VALUE(0,3))+1;
-        v_grupa := chr(TRUNC(DBMS_RANDOM.VALUE(0,2))+65) || chr(TRUNC(DBMS_RANDOM.VALUE(0,6))+49);
-        select count(*) into v_temp from studenti where an=v_an and grupa=v_grupa;
-        exit when v_temp < 30;
-      END LOOP;
-      
-      v_bursa := '';
-      IF (DBMS_RANDOM.VALUE(0,100)<10) THEN
-         v_bursa := TRUNC(DBMS_RANDOM.VALUE(0,10))*100 + 500;
-      END IF;
-      
-      v_data_nastere := TO_DATE('01-01-1974','MM-DD-YYYY')+TRUNC(DBMS_RANDOM.VALUE(0,365));
-      
-      v_temp:='';
-      v_email := lower(v_nume ||'.'|| v_prenume1);
-      LOOP         
-         select count(*) into v_temp from studenti where email = v_email||v_temp;
-         exit when v_temp=0;
-         v_temp :=  TRUNC(DBMS_RANDOM.VALUE(0,100));
-      END LOOP;    
-      
-      if (TRUNC(DBMS_RANDOM.VALUE(0,2))=0) then v_email := v_email ||'@gmail.com';
-         else v_email := v_email ||'@info.ro';
-      end if;
-                      
-      --DBMS_OUTPUT.PUT_LINE (v_i||' '||v_matr||' '||v_nume||' '||v_prenume ||' '|| v_an ||' '|| v_grupa||' '|| v_bursa||' '|| to_char(v_data_nastere, 'DD-MM-YYYY')||' '|| v_email);      
-      insert into studenti values(v_i, v_matr, v_nume, v_prenume, v_an, v_grupa, v_bursa, v_data_nastere, v_email, sysdate, sysdate);
-   END LOOP;
-   DBMS_OUTPUT.PUT_LINE('Inserarea a 1025 studenti... GATA !');
-   
-   
-   
-   /*
-   
-   -- this runs slow
-   select count(*) into v_temp from studenti;
-   FOR v_i IN 1..30000 LOOP          
-       v_temp1 :=  TRUNC(DBMS_RANDOM.VALUE(0,v_temp-1))+1;
-       v_temp2 :=  TRUNC(DBMS_RANDOM.VALUE(0,v_temp-1))+1;
-       select count(*) into v_temp3 from prieteni where id_student1=v_temp1 and id_student2=v_temp2;
-       IF (v_temp3=0) THEN 
-          v_data_nastere := (sysdate-TRUNC(DBMS_RANDOM.VALUE(0,1000)));
-          insert into prieteni values(v_i, v_temp1, v_temp2, v_data_nastere, v_data_nastere);          
-       END IF;
-   END LOOP;
-
-   -- de refacut bucata de mai sus
-   */
-   -- this runs faster
-   select count(*) into v_temp from studenti;
-   FOR v_i IN 1..20000 LOOP   
-       LOOP
-          v_temp1 :=  TRUNC(DBMS_RANDOM.VALUE(0,v_temp-1))+1;
-          v_temp2 :=  TRUNC(DBMS_RANDOM.VALUE(0,v_temp-1))+1;
-          EXIT WHEN v_temp1<>v_temp2;
-       END LOOP;
-       DECLARE 
-       BEGIN
-          --DBMS_OUTPUT.PUT_LINE(v_temp1 || ' ' || v_temp2);
-          v_data_nastere := (sysdate-TRUNC(DBMS_RANDOM.VALUE(0,1000)));
-          insert into prieteni values(v_i, v_temp1, v_temp2, v_data_nastere, v_data_nastere); 
-          exception 
-             when OTHERS then null;
-       END;
-   END LOOP;   
-      
-   
-   DBMS_OUTPUT.PUT_LINE('Inserarea matreriilor...');
-   FOR v_i IN 1..8 LOOP
-      IF (v_i<5) THEN v_temp := 1; ELSE v_temp := 2; END IF;
-      IF (v_i IN (2,3,6,7)) THEN v_temp1 := 5; END IF; 
-      IF (v_i IN (1,5)) THEN v_temp1 := 4; END IF; 
-      IF (v_i IN (4,8)) THEN v_temp1 := 6; END IF; 
-      insert into cursuri values (v_i, lista_materii_an_1(v_i), 1, v_temp, v_temp1, sysdate-1200, sysdate-1200);
-   END LOOP;
-   
-   FOR v_i IN 1..8 LOOP
-      IF (v_i<5) THEN v_temp := 1; ELSE v_temp := 2; END IF;
-      IF (v_i IN (2,3,6,7)) THEN v_temp1 := 5; END IF; 
-      IF (v_i IN (1,5)) THEN v_temp1 := 4; END IF; 
-      IF (v_i IN (4,8)) THEN v_temp1 := 6; END IF; 
-      insert into cursuri values (v_i+8, lista_materii_an_2(v_i), 2, v_temp, v_temp1, sysdate-1200, sysdate-1200);
-   END LOOP;
-   
-   FOR v_i IN 1..8 LOOP
-      IF (v_i<5) THEN v_temp := 1; ELSE v_temp := 2; END IF;
-      IF (v_i IN (2,3,6,7)) THEN v_temp1 := 5; END IF; 
-      IF (v_i IN (1,5)) THEN v_temp1 := 4; END IF; 
-      IF (v_i IN (4,8)) THEN v_temp1 := 6; END IF; 
-      insert into cursuri values (v_i+16, lista_materii_an_3(v_i), 3, v_temp, v_temp1, sysdate-1200, sysdate-1200);
-   END LOOP;       
-   DBMS_OUTPUT.PUT_LINE('Inserarea matreriilor... GATA !');  
-   
-   
-   DBMS_OUTPUT.PUT_LINE('Inserare note...');
-   
-   v_temp3 := 1;   
-   FOR v_i IN 1..1025 LOOP
-       select an into v_temp from studenti where id = v_i;
-       if (v_temp=1) then
-          FOR v_temp1 IN 1..8 LOOP
-            if (v_temp1 IN (1,2,3,4)) THEN v_temp_date := to_date(to_char(sysdate,'YYYY')||'-01-01','YYYY-MM-DD')+(40+TRUNC(DBMS_RANDOM.VALUE(0,14)))-365;
-               ELSE v_temp_date := to_date(to_char(sysdate,'YYYY')||'-01-01','YYYY-MM-DD')+(180+TRUNC(DBMS_RANDOM.VALUE(0,14)))-365;
-            END IF;
-            insert into note values (v_temp3, v_i, v_temp1, TRUNC(DBMS_RANDOM.VALUE(0,7)) + 4, v_temp_date, v_temp_date, v_temp_date);
-            v_temp3 := v_temp3+1;
-          END LOOP;  
-       end if;
-       if (v_temp=2) then
-          FOR v_temp1 IN 1..16 LOOP
-            if (v_temp1 IN (1,2,3,4)) THEN v_temp_date := to_date(to_char(sysdate,'YYYY')||'-01-01','YYYY-MM-DD')+(40+TRUNC(DBMS_RANDOM.VALUE(0,14)))-730; END IF;
-            if (v_temp1 IN (5,6,7,8)) THEN v_temp_date := to_date(to_char(sysdate,'YYYY')||'-01-01','YYYY-MM-DD')+(180+TRUNC(DBMS_RANDOM.VALUE(0,14)))-730; END IF;          
-            if (v_temp1 IN (9,10,11,12)) THEN v_temp_date := to_date(to_char(sysdate,'YYYY')||'-01-01','YYYY-MM-DD')+(40+TRUNC(DBMS_RANDOM.VALUE(0,14)))-365; END IF;
-            if (v_temp1 IN (13,14,15,16)) THEN v_temp_date := to_date(to_char(sysdate,'YYYY')||'-01-01','YYYY-MM-DD')+(180+TRUNC(DBMS_RANDOM.VALUE(0,14)))-365; END IF;                                   
-            insert into note values (v_temp3, v_i, v_temp1, TRUNC(DBMS_RANDOM.VALUE(0,7)) + 4, v_temp_date, v_temp_date, v_temp_date);
-            v_temp3 := v_temp3+1;
-          END LOOP;  
-       end if;  
-       
-       if (v_temp=3) then
-          FOR v_temp1 IN 1..24 LOOP
-            if (v_temp1 IN (1,2,3,4)) THEN v_temp_date := to_date(to_char(sysdate,'YYYY')||'-01-01','YYYY-MM-DD')+(40+TRUNC(DBMS_RANDOM.VALUE(0,14)))-1095; END IF;
-            if (v_temp1 IN (5,6,7,8)) THEN v_temp_date := to_date(to_char(sysdate,'YYYY')||'-01-01','YYYY-MM-DD')+(180+TRUNC(DBMS_RANDOM.VALUE(0,14)))-1095; END IF;          
-            if (v_temp1 IN (9,10,11,12)) THEN v_temp_date := to_date(to_char(sysdate,'YYYY')||'-01-01','YYYY-MM-DD')+(40+TRUNC(DBMS_RANDOM.VALUE(0,14)))-730; END IF;
-            if (v_temp1 IN (13,14,15,16)) THEN v_temp_date := to_date(to_char(sysdate,'YYYY')||'-01-01','YYYY-MM-DD')+(180+TRUNC(DBMS_RANDOM.VALUE(0,14)))-730; END IF;                                   
-            if (v_temp1 IN (17,18,19,20)) THEN v_temp_date := to_date(to_char(sysdate,'YYYY')||'-01-01','YYYY-MM-DD')+(40+TRUNC(DBMS_RANDOM.VALUE(0,14)))-365; END IF;
-            if (v_temp1 IN (21,22,23,24)) THEN v_temp_date := to_date(to_char(sysdate,'YYYY')||'-01-01','YYYY-MM-DD')+(180+TRUNC(DBMS_RANDOM.VALUE(0,14)))-365; END IF;                                   
-            
-            insert into note values (v_temp3, v_i, v_temp1, TRUNC(DBMS_RANDOM.VALUE(0,6)) + 4, v_temp_date, v_temp_date, v_temp_date);
-            v_temp3 := v_temp3+1;
-          END LOOP;  
-       end if;                
-   END LOOP;
-   
-   DBMS_OUTPUT.PUT_LINE('Inserare note... GATA!');
-   
-   
-   DBMS_OUTPUT.PUT_LINE('Inserare profesori...');
-   
-   FOR v_i IN 1..30 LOOP
-      v_nume := lista_nume(TRUNC(DBMS_RANDOM.VALUE(0,lista_nume.count))+1);
-      IF (DBMS_RANDOM.VALUE(0,100)<50) THEN      
-         v_prenume1 := lista_prenume_fete(TRUNC(DBMS_RANDOM.VALUE(0,lista_prenume_fete.count))+1);
-         LOOP
-            v_prenume2 := lista_prenume_fete(TRUNC(DBMS_RANDOM.VALUE(0,lista_prenume_fete.count))+1);
-            exit when v_prenume1<>v_prenume2;
-         END LOOP;
-       ELSE
-         v_prenume1 := lista_prenume_baieti(TRUNC(DBMS_RANDOM.VALUE(0,lista_prenume_baieti.count))+1);
-         LOOP
-            v_prenume2 := lista_prenume_baieti(TRUNC(DBMS_RANDOM.VALUE(0,lista_prenume_baieti.count))+1);
-            exit when v_prenume1<>v_prenume2;
-         END LOOP;       
-       END IF;
-       
-       IF (DBMS_RANDOM.VALUE(0,100)<60) THEN  
-          IF LENGTH(v_prenume1 || ' ' || v_prenume2) <= 20 THEN
-            v_prenume := v_prenume1 || ' ' || v_prenume2;
-          END IF;
-          else 
-             v_prenume:=v_prenume1;
-        END IF;           
-        INSERT INTO profesori values (v_i, v_nume, v_prenume, lista_grade_diactice(TRUNC(DBMS_RANDOM.VALUE(0,5))+1), sysdate-1000, sysdate-1000);       
-    END LOOP;
-    
-    DBMS_OUTPUT.PUT_LINE('Inserare profesori... GATA!');  
-    
-    
-    DBMS_OUTPUT.PUT_LINE('Asocierea profesorilor cu cursurile...');
-    v_temp3:=1;
-    FOR v_i IN 1..24 LOOP
-       INSERT INTO didactic values(v_temp3,v_i, v_i, sysdate-1000, sysdate-1000);
-       v_temp3:=v_temp3+1;
-    END LOOP;
-    
-    FOR v_i IN 1..50 LOOP
-       INSERT INTO didactic values(v_temp3,(TRUNC(DBMS_RANDOM.VALUE(0,30))+1), (TRUNC(DBMS_RANDOM.VALUE(0,24))+1), sysdate-1000, sysdate-1000);
-       v_temp3:=v_temp3+1;
-    END LOOP;
-    
-    
-    DBMS_OUTPUT.PUT_LINE('Asocierea profesorilor cu cursurile... GATA!');      
-    
-END;
-/
