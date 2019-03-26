@@ -14,7 +14,8 @@ DROP TABLE AIRPORT CASCADE CONSTRAINTS
 /
 
 CREATE TABLE PASSENGER(
-CNP number(13) not null primary key,
+id INT NOT NULL PRIMARY KEY,
+CNP number(13) not null unique,
 first_name varchar2(50),
 last_name varchar2(50),
 gender varchar2(10),
@@ -50,11 +51,11 @@ CONSTRAINT fk_discount_cards_airline_id FOREIGN KEY (airline_id) REFERENCES airl
 /
 
 CREATE TABLE bought_cards(
-CNP number(13),
+passenger_id INT NOT NULL,
 id_card number(3),
 expiration_date date,
 CONSTRAINT fk_bought_cards_id_card FOREIGN KEY (id_card) REFERENCES discount_card(id),
-CONSTRAINT fk_bought_cards_cnp FOREIGN KEY (cnp) REFERENCES passenger(cnp)
+CONSTRAINT fk_bought_cards_passenger_id FOREIGN KEY (passenger_id) REFERENCES passenger(id)
 )
 /
 
@@ -77,14 +78,14 @@ CONSTRAINT fk_flight_destination FOREIGN KEY (destination) REFERENCES airport(id
 CREATE TABLE booking(
 id number(7) not null primary key,
 flight_id number(5),
-cnp	number(13),
+passenger_id INT NOT NULL,
 airline_id number(2),
 final_price number(4),
 ensurance number(4),
 luggace number(2),
 seat number(3),
 CONSTRAINT fk_booking_flight_id FOREIGN KEY (flight_id) REFERENCES flight(id),
-CONSTRAINT fk_booking_cnp FOREIGN KEY (cnp) REFERENCES passenger(cnp),
+CONSTRAINT fk_booking_passenger_id FOREIGN KEY (passenger_id) REFERENCES passenger(id),
 CONSTRAINT fk_booking_airline_id FOREIGN KEY (airline_id) REFERENCES airline(id)
 )
 /
@@ -129,10 +130,17 @@ v_card_name varchar2(25);
 
 --Bought_cards
 v_expiration_date DATE;
-v_contor number(8);
-v_id number(8);
+v_count_passengers number(8);
+v_count_cards number(8);
+v_id_card number(8);
+v_id_passenger number(8);
 
 --Flight
+v_count_airline number(8);
+v_count_airport number(8);
+v_airline_id number(8);
+v_airport_id number(8);
+v_airport_id2 number(8);
 v_departure_date DATE;
 v_arrival_date DATE;
 v_rand_float float;
@@ -142,9 +150,11 @@ v_ensurance number(2);
 
 --Booking
 v_final_price number(4);
-v_ensurance_pay number(3);
+v_ensurance_pay number(8);
 v_luggage number(2);
 v_seat number(3);
+v_count_flight number(8);
+v_id_flight number(8);
 
 v_rand_val number(10);
 begin
@@ -167,7 +177,7 @@ v_email:= lower(v_first_name)||'.'||lower(v_last_name)||v_rand_val||'@'||mail_do
 
 v_cnp:=v_cnp+1;
 
-insert into passenger values(v_cnp,v_first_name,v_last_name,v_gender,v_birth_date,v_nationality,v_email);
+insert into passenger values(v_i,v_cnp,v_first_name,v_last_name,v_gender,v_birth_date,v_nationality,v_email);
 
 END LOOP;
 --Airline
@@ -197,19 +207,25 @@ for v_i in 1..airline_names.count loop
 end loop;
 
 --Bought_cards
---for v_i in 1..250 loop
+select count(*)into v_count_passengers from passenger;
+select count(*)into v_count_cards from discount_card;
+for v_i in 1..250 loop
 v_expiration_date:=to_date('2019-07-01','yyyy-mm-dd')+trunc(dbms_random.value(1,365));
---select count(*)into v_contor from passenger;
---v_cnp:=dbms_random.value(1,v_contor);
---DBMS_OUTPUT.PUT_LINE(v_contor);
---select count(*)into v_contor from discount_card;
---v_id:=dbms_random.value(1,v_contor);
---insert into bought_cards values(1000000000000,1,v_expiration_date);
-insert into bought_cards values(1000000000001,2,v_expiration_date);
---insert into bought_cards values(1000000000002,3,v_expiration_date);
---end loop;
+v_id_passenger:=dbms_random.value(1,v_count_passengers);
+v_id_card:=dbms_random.value(1,v_count_cards);
+insert into bought_cards values(v_id_passenger,v_id_card,v_expiration_date);
+end loop;
 
 --Flight
+select count(*) into v_count_airline from airline;
+select count(*) into v_count_airport from airport;
+for v_i in 1..250 loop
+v_airline_id:=dbms_random.value(1,v_count_airline);
+v_airport_id:=dbms_random.value(1,v_count_airport);
+v_airport_id2:=dbms_random.value(1,v_count_airport);
+while v_airport_id=v_airport_id2 loop
+v_airport_id2:=dbms_random.value(1,v_count_airport);
+end loop;
 v_rand_val:=dbms_random.value(10,365);
 v_rand_float:=dbms_random.value(1.00, 24.00);
 v_departure_date:= SYSDATE + v_rand_val + v_rand_float/24;
@@ -218,13 +234,23 @@ v_arrival_date:=v_departure_date+v_rand_float/24;
 v_base_price:=dbms_random.value(50,500);
 v_tickets:=dbms_random.value(100,200);
 v_ensurance:=dbms_random.value(30,80);
-DBMS_OUTPUT.PUT_LINE(v_departure_date||' '||v_arrival_date||' '||v_base_price||' '||v_tickets||' '||v_ensurance);
-
+insert into flight values(v_i,v_airline_id,v_airport_id,v_airport_id2,v_departure_date,v_arrival_date,v_base_price,v_tickets,v_ensurance);
+end loop;
 --Booking
+select count(*) into v_count_flight from flight;
+for v_i in 1..10000 loop
 --v_final_price dbms_random.value(50,500);
 --v_ensurance_pay number(3);
+v_id_flight:=dbms_random.value(1,v_count_flight);
+v_id_passenger:=dbms_random.value(1,v_count_passengers);
+v_airline_id:=dbms_random.value(1,v_count_airline);
+select base_price into v_final_price from flight where id=v_id_flight;
+v_final_price:=v_final_price+ dbms_random.value(50,100);
+select ensurance_price into v_ensurance_pay from flight where id=v_id_flight;
+v_ensurance_pay:=dbms_random.value(0,1)*v_ensurance_pay*10;
 v_luggage:=round(dbms_random.value(1,2))*10;
-v_seat:=100;
+select number_tickets into v_seat from flight where id=v_id_flight;
 v_seat:=dbms_random.value(1,v_seat);
-DBMS_OUTPUT.PUT_LINE(v_luggage||' '||v_seat);
+insert into booking values(v_i,v_id_flight,v_id_passenger,v_airline_id,v_final_price,v_ensurance_pay,v_luggage,v_seat);
+end loop;
 end;
