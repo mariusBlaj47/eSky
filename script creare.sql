@@ -2,7 +2,7 @@ DROP TABLE PASSENGER CASCADE CONSTRAINTS
 /
 DROP TABLE AIRLINE CASCADE CONSTRAINTS
 /
-DROP TABLE BOUGHT CASCADE CONSTRAINTS
+DROP TABLE BOUGHT_CARDS CASCADE CONSTRAINTS
 /
 DROP TABLE DISCOUNT_CARD CASCADE CONSTRAINTS
 /
@@ -13,45 +13,67 @@ DROP TABLE BOOKING CASCADE CONSTRAINTS
 DROP TABLE AIRPORT CASCADE CONSTRAINTS
 /
 
+CREATE TABLE PASSENGER(
+CNP number(13) not null primary key,
+first_name varchar2(50),
+last_name varchar2(50),
+gender varchar2(10),
+birth_date date,
+nationality varchar2(50),
+email varchar2(50)
+)
+/
+
 CREATE TABLE AIRLINE(
 id INT NOT NULL PRIMARY KEY,
 name VARCHAR2(25) NOT NULL UNIQUE
 )
+/
 
-CREATE TABLE PASSENGER(
-CNP number(13) not null primary key,
-first_name varchar2(20),
-last_name varchar2(20),
-gender varchar2(10),
-birth_date date,
-nationality varchar2(20),
-email varchar2(50)
+CREATE TABLE airport(
+id number(2) not null primary key,
+name varchar2(50),
+city varchar2(40),
+country varchar2(40)
 )
+/
 
-CREATE TABLE bought_cards(
-CNP number(13),
-idcard number(3),
-expiration_date date
-)
 CREATE TABLE Discount_card(
 id number(3) not null primary key,
 airline_id number(2),
 name varchar2(20),
 discount number(2),
 price number(4),
-validity number(3)
+validity number(3),
+CONSTRAINT fk_discount_cards_airline_id FOREIGN KEY (airline_id) REFERENCES airline(id)
 )
+/
+
+CREATE TABLE bought_cards(
+CNP number(13),
+id_card number(3),
+expiration_date date,
+CONSTRAINT fk_bought_cards_id_card FOREIGN KEY (id_card) REFERENCES discount_card(id),
+CONSTRAINT fk_bought_cards_cnp FOREIGN KEY (cnp) REFERENCES passenger(cnp)
+)
+/
+
 CREATE TABLE flight(
 id number(5) not null primary key,
 airline_id number(2),
-origin varchar2(50),
-destination varchar2(50),
+origin number(2),
+destination number(2),
 departure_date date,
 arrival_date date,
 base_price number(4),
-numer_tickets number(3),
-ensurance_price number(3)
+number_tickets number(3),
+ensurance_price number(3),
+CONSTRAINT fk_flight_airline_id FOREIGN KEY (airline_id) REFERENCES airline(id),
+CONSTRAINT fk_flight_origin FOREIGN KEY (origin) REFERENCES airport(id),
+CONSTRAINT fk_flight_destination FOREIGN KEY (destination) REFERENCES airport(id)
 )
+/
+
 CREATE TABLE booking(
 id number(7) not null primary key,
 flight_id number(5),
@@ -60,20 +82,13 @@ airline_id number(2),
 final_price number(4),
 ensurance number(4),
 luggace number(2),
-seat number(3)
+seat number(3),
+CONSTRAINT fk_booking_flight_id FOREIGN KEY (flight_id) REFERENCES flight(id),
+CONSTRAINT fk_booking_cnp FOREIGN KEY (cnp) REFERENCES passenger(cnp),
+CONSTRAINT fk_booking_airline_id FOREIGN KEY (airline_id) REFERENCES airline(id)
 )
-CREATE TABLE airport(
-id number(2) not null primary key,
-name varchar2(50),
-city varchar2(40),
-country varchar2(40)
-)
+/
 
-
-create or replace type vc_arr as table of varchar2(50);
-
-alter session set nls_date_format='dd/mm/yyyy hh:mi:ss pm';
-set serveroutput on;
 
 declare
 --Passenger
@@ -84,12 +99,12 @@ nationalities vc_arr:=vc_arr('romanian','english','mexican','nigerian','irish','
 mail_domains vc_arr:=vc_arr('gmail.com','yahoo.com','yahoo.ro','rocketmail.com','hotmail.com','aol.com','hotmail.co.uk','hotmail.fr','msn.com','hotmail.fr');
 
 v_cnp number(13):=1000000000000;
-v_last_name varchar2(35);
-v_first_name varchar2(35);
+v_last_name varchar2(50);
+v_first_name varchar2(50);
 v_gender varchar2(10);
 v_birth_date DATE;
-v_nationality varchar2(25);
-v_email varchar2(50);
+v_nationality varchar2(50);
+v_email varchar2(80);
 
 --Airline
 airline_names vc_arr:=vc_arr('Wizz Air','Blue Air','Ryanair','Turkish Airlines','EasyJet','Lufthansa','Pegas Fly','Eurowings','British Airways','Air France-KLM');
@@ -132,7 +147,7 @@ v_seat number(3);
 v_rand_val number(10);
 begin
 DBMS_OUTPUT.PUT_LINE('Inserare 1_000_000 pasageri');
-FOR v_i IN 1..1025 LOOP
+FOR v_i IN 1..1000 LOOP
 
 v_last_name:=last_names(DBMS_RANDOM.VALUE(1,last_names.count));
 v_rand_val:= DBMS_RANDOM.VALUE(1,2);
@@ -148,17 +163,16 @@ v_nationality:=nationalities(DBMS_RANDOM.VALUE(1,nationalities.count));
 v_rand_val:= DBMS_RANDOM.VALUE(1,99);
 v_email:= lower(v_first_name)||'.'||lower(v_last_name)||v_rand_val||'@'||mail_domains(DBMS_RANDOM.VALUE(1,mail_domains.count));
 
+v_cnp:=v_cnp+1;
 
-DBMS_OUTPUT.PUT_LINE(v_cnp||' '||v_first_name||' '||v_last_name||' '||v_gender||' '||v_birth_date||' '||v_nationality||' '||v_email);
-
-v_cnp:=v_cnp+DBMS_RANDOM.VALUE(1,47474747);
+insert into passenger values(v_cnp,v_first_name,v_last_name,v_gender,v_birth_date,v_nationality,v_email);
 
 END LOOP;
 --Airline
 DBMS_OUTPUT.PUT_LINE('Inseram '|| airline_names.count||' firme de zbor');
 FOR v_i IN 1..airline_names.count LOOP
 v_airline_name:=airline_names(v_i);
-DBMS_OUTPUT.PUT_LINE(v_airline_name);
+insert into passenger values(v_i,v_airline_name);
 end loop;
 --Airport
 DBMS_OUTPUT.PUT_LINE('Inseram '|| airport_names.count||' aeroporturi');
@@ -203,14 +217,30 @@ v_seat:=dbms_random.value(1,v_seat);
 DBMS_OUTPUT.PUT_LINE(v_luggage||' '||v_seat);
 end;
 
-//tester
 
-declare
---v_rand_val number(5);
-begin
---v_rand_val:= DBMS_RANDOM.VALUE(1,2);
-DBMS_OUTPUT.PUT_LINE(to_date('1950-01-01', 'yyyy-mm-dd')+trunc(dbms_random.value(1,364*55)));
-end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+create or replace type vc_arr as table of varchar2(50);
+
+alter session set nls_date_format='dd/mm/yyyy hh:mi:ss pm';
+set serveroutput on;
 
 --endsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsfendsadsafaasfsasgafasfsfafsf
 
