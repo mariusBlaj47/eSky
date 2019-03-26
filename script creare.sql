@@ -18,7 +18,7 @@ DROP TABLE AIRLINE_ACCOUNTS CASCADE CONSTRAINTS
 
 CREATE TABLE PASSENGERS(
 id INT NOT NULL PRIMARY KEY,
-CNP number(13) not null unique,
+CNP number(13) not null ,
 first_name varchar2(50),
 last_name varchar2(50),
 gender varchar2(10),
@@ -30,13 +30,13 @@ email varchar2(50)
 
 CREATE TABLE AIRLINES(
 id INT NOT NULL PRIMARY KEY,
-name VARCHAR2(25) NOT NULL UNIQUE
+name VARCHAR2(25) NOT NULL
 )
 /
 
 CREATE TABLE AIRLINE_ACCOUNTS(
 airline_id INT NOT NULL,
-username VARCHAR2(30) NOT NULL UNIQUE,
+username VARCHAR2(30) NOT NULL ,
 airline_password VARCHAR2(25) NOT NULL,
 CONSTRAINT fk_airline_accounts_airline_id FOREIGN KEY (airline_id) REFERENCES airlines(id)
 )
