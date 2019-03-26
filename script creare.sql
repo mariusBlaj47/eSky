@@ -172,7 +172,7 @@ END LOOP;
 DBMS_OUTPUT.PUT_LINE('Inseram '|| airline_names.count||' firme de zbor');
 FOR v_i IN 1..airline_names.count LOOP
 v_airline_name:=airline_names(v_i);
-insert into passenger values(v_i,v_airline_name);
+insert into airline values(v_i,v_airline_name);
 end loop;
 --Airport
 DBMS_OUTPUT.PUT_LINE('Inseram '|| airport_names.count||' aeroporturi');
