@@ -18,7 +18,7 @@ DROP TABLE AIRLINE_ACCOUNTS CASCADE CONSTRAINTS
 
 CREATE TABLE PASSENGERS(
 id INT NOT NULL PRIMARY KEY,
-CNP number(13) not null  ,
+CNP number(13) not null,
 first_name varchar2(50),
 last_name varchar2(50),
 gender varchar2(10),
@@ -30,13 +30,13 @@ email varchar2(50)
 
 CREATE TABLE AIRLINES(
 id INT NOT NULL PRIMARY KEY,
-name VARCHAR2(25) NOT NULL  
+name VARCHAR2(25) NOT NULL
 )
 /
 
 CREATE TABLE AIRLINE_ACCOUNTS(
 airline_id INT NOT NULL,
-username VARCHAR2(30) NOT NULL  ,
+username VARCHAR2(30) NOT NULL,
 airline_password VARCHAR2(25) NOT NULL,
 CONSTRAINT fk_airline_accounts_airline_id FOREIGN KEY (airline_id) REFERENCES airlines(id)
 )
@@ -123,7 +123,7 @@ airline_names vc_arr:=vc_arr('Wizz Air','Blue Air','Ryanair','Turkish Airlines',
 v_airline_name varchar2(40);
 
 --Airport
-airport_names vc_arr:=vc_arr('Henri Coanda International Airport','Iasi International Airport','Avram Iancu International Airport Cluj','Orio al Serio International Airport','Malpensa Airport','Dublin Airport','Brussels Airport','Charles de Gaulle Airport','Barcelona–El Prat Airport','Lisbon Portela Airport','London City Airport','Sofia International Airport','Haneda Airport','John F. Kennedy International Airport','Toronto Pearson International Airport');
+airport_names vc_arr:=vc_arr('Henri Coanda International Airport','Iasi International Airport','Avram Iancu International Airport Cluj','Orio al Serio International Airport','Malpensa Airport','Dublin Airport','Brussels Airport','Charles de Gaulle Airport','Barcelonaï¿½El Prat Airport','Lisbon Portela Airport','London City Airport','Sofia International Airport','Haneda Airport','John F. Kennedy International Airport','Toronto Pearson International Airport');
 airport_cities vc_arr:=vc_arr('Bucharest','Iasi','Cluj-Napoca','Milan','Milan','Dublin','Brussel','Paris','Barcelona','Lisbon','London','Sofia','Tokyo','New York City','Mississauga');
 airport_countries vc_arr:=vc_arr('Romania','Romania','Romania','Italia','Italia','Ireland','Belgium','France','Spain','Portugal','United Kingdom','Bulgaria','Japan','New York','Canada');
 
