@@ -204,9 +204,9 @@ v_expiration_date:=to_date('2019-07-01','yyyy-mm-dd')+trunc(dbms_random.value(1,
 --DBMS_OUTPUT.PUT_LINE(v_contor);
 --select count(*)into v_contor from discount_card;
 --v_id:=dbms_random.value(1,v_contor);
-insert into bought_cards values(1000000000000,1,v_expiration_date);
+--insert into bought_cards values(1000000000000,1,v_expiration_date);
 insert into bought_cards values(1000000000001,2,v_expiration_date);
-insert into bought_cards values(1000000000002,3,v_expiration_date);
+--insert into bought_cards values(1000000000002,3,v_expiration_date);
 --end loop;
 
 --Flight
