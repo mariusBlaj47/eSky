@@ -12,6 +12,8 @@ DROP TABLE BOOKINGS CASCADE CONSTRAINTS
 /
 DROP TABLE AIRPORTS CASCADE CONSTRAINTS
 /
+DROP TABLE AIRLINE_ACCOUNTS CASCADE CONSTRAINTS
+/
 
 
 CREATE TABLE PASSENGERS(
@@ -29,6 +31,14 @@ email varchar2(50)
 CREATE TABLE AIRLINES(
 id INT NOT NULL PRIMARY KEY,
 name VARCHAR2(25) NOT NULL UNIQUE
+)
+/
+
+CREATE TABLE AIRLINE_ACCOUNTS(
+airline_id INT NOT NULL,
+username VARCHAR2(30) NOT NULL UNIQUE,
+airline_password VARCHAR2(25) NOT NULL,
+CONSTRAINT fk_airline_accounts_airline_id FOREIGN KEY (airline_id) REFERENCES airlines(id)
 )
 /
 
@@ -157,6 +167,10 @@ v_seat number(3);
 v_count_flight number(8);
 v_id_flight number(8);
 
+--Airline account
+v_username varchar2(30);
+v_password varchar2(25);
+
 v_rand_val number(10);
 begin
 DBMS_OUTPUT.PUT_LINE('Inserare 1_000_000 pasageri');
@@ -253,5 +267,12 @@ v_luggage:=round(dbms_random.value(1,2))*10;
 select number_tickets into v_seat from flights where id=v_id_flight;
 v_seat:=dbms_random.value(1,v_seat);
 insert into bookings values(v_i,v_id_flight,v_id_passenger,v_airline_id,v_final_price,v_ensurance_pay,v_luggage,v_seat);
+end loop;
+
+for v_i in 1..v_count_airline loop
+v_rand_val:=dbms_random.value(1,247);
+v_password:='password'||v_rand_val;
+SELECT lower(REPLACE(name,' ', '_')) into v_username from airlines where id=v_i;
+insert into airline_accounts values(v_i,v_username,v_password);
 end loop;
 end;
