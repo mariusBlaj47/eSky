@@ -43,7 +43,7 @@ CONSTRAINT fk_airline_accounts_airline_id FOREIGN KEY (airline_id) REFERENCES ai
 /
 
 CREATE TABLE airports(
-id number(2) not null primary key,
+id number(5) not null primary key,
 name varchar2(50),
 city varchar2(40),
 country varchar2(40)
@@ -51,8 +51,8 @@ country varchar2(40)
 /
 
 CREATE TABLE Discount_cards(
-id number(3) not null primary key,
-airline_id number(2),
+id number(8) not null primary key,
+airline_id number(8),
 name varchar2(20),
 discount number(2),
 price number(4),
@@ -63,7 +63,7 @@ CONSTRAINT fk_discount_cards_airline_id FOREIGN KEY (airline_id) REFERENCES airl
 
 CREATE TABLE bought_cards(
 passenger_id INT NOT NULL,
-id_card number(3),
+id_card number(5),
 expiration_date date,
 CONSTRAINT fk_bought_cards_id_card FOREIGN KEY (id_card) REFERENCES discount_cards(id),
 CONSTRAINT fk_bought_cards_passenger_id FOREIGN KEY (passenger_id) REFERENCES passengers(id)
@@ -71,8 +71,8 @@ CONSTRAINT fk_bought_cards_passenger_id FOREIGN KEY (passenger_id) REFERENCES pa
 /
 
 CREATE TABLE flights(
-id number(5) not null primary key,
-airline_id number(2),
+id number(8) not null primary key,
+airline_id number(8),
 origin number(2),
 destination number(2),
 departure_date date,
@@ -87,13 +87,13 @@ CONSTRAINT fk_flight_destination FOREIGN KEY (destination) REFERENCES airports(i
 /
 
 CREATE TABLE bookings(
-id number(7) not null primary key,
-flight_id number(5),
+id number(8) not null primary key,
+flight_id number(8),
 passenger_id INT NOT NULL,
-airline_id number(2),
+airline_id number(5),
 final_price number(4),
 ensurance number(4),
-luggace number(2),
+luggage number(2),
 seat number(3),
 CONSTRAINT fk_booking_flight_id FOREIGN KEY (flight_id) REFERENCES flights(id),
 CONSTRAINT fk_booking_passenger_id FOREIGN KEY (passenger_id) REFERENCES passengers(id),
@@ -174,7 +174,7 @@ v_password varchar2(25);
 v_rand_val number(10);
 begin
 DBMS_OUTPUT.PUT_LINE('Inserare 1_000_000 pasageri');
-FOR v_i IN 1..1000 LOOP
+FOR v_i IN 1..10000 LOOP
 
 v_last_name:=last_names(DBMS_RANDOM.VALUE(1,last_names.count));
 v_rand_val:= DBMS_RANDOM.VALUE(1,2);
@@ -234,7 +234,7 @@ end loop;
 --Flight
 select count(*) into v_count_airline from airlines;
 select count(*) into v_count_airport from airports;
-for v_i in 1..250 loop
+for v_i in 1..10000 loop
 v_airline_id:=dbms_random.value(1,v_count_airline);
 v_airport_id:=dbms_random.value(1,v_count_airport);
 v_airport_id2:=dbms_random.value(1,v_count_airport);
@@ -253,7 +253,7 @@ insert into flights values(v_i,v_airline_id,v_airport_id,v_airport_id2,v_departu
 end loop;
 --Booking
 select count(*) into v_count_flight from flights;
-for v_i in 1..10000 loop
+for v_i in 1..1000000 loop
 --v_final_price dbms_random.value(50,500);
 --v_ensurance_pay number(3);
 v_id_flight:=dbms_random.value(1,v_count_flight);
