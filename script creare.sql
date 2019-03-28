@@ -191,7 +191,7 @@ v_id_flight number(8);
 v_rand_val number(10);
 begin
 DBMS_OUTPUT.PUT_LINE('Inserare 1_000_000 pasageri');
-FOR v_i IN 1..10000 LOOP
+FOR v_i IN 1..1000000 LOOP
 
 v_last_name:=last_names(DBMS_RANDOM.VALUE(1,last_names.count));
 v_rand_val:= DBMS_RANDOM.VALUE(1,2);
@@ -242,7 +242,7 @@ end loop;
 --Bought_cards
 select count(*)into v_count_passengers from PASSENGERS;
 select count(*)into v_count_cards from DISCOUNT_CARDS;
-for v_i in 1..1000 loop
+for v_i in 1..50000 loop
 v_expiration_date:=to_date('2019-07-01','yyyy-mm-dd')+trunc(dbms_random.value(1,365));
 v_id_passenger:=dbms_random.value(1,v_count_passengers);
 v_id_card:=dbms_random.value(1,v_count_cards);
@@ -252,7 +252,7 @@ end loop;
 --Flight
 select count(*) into v_count_airline from AIRLINES;
 select count(*) into v_count_airport from AIRPORTS;
-for v_i in 1..1000 loop
+for v_i in 1..10000 loop
 v_airline_id:=dbms_random.value(1,v_count_airline);
 v_airport_id:=dbms_random.value(1,v_count_airport);
 v_airport_id2:=dbms_random.value(1,v_count_airport);
@@ -274,7 +274,7 @@ insert into ORIGIN values(v_i,v_airport_id2);
 end loop;
 --Booking
 select count(*) into v_count_flight from FLIGHTS;
-for v_i in 1..1000 loop
+for v_i in 1..1000000 loop
 --v_final_price dbms_random.value(50,500);
 --v_ensurance_pay number(3);
 v_id_flight:=dbms_random.value(1,v_count_flight);
