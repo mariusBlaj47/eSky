@@ -76,7 +76,6 @@ ensurance_price number(3)
 /
 
 CREATE TABLE BOOKING(
-id number(8) not null primary key,
 flight_id number(8),
 passenger_id INT NOT NULL,
 final_price number(4),
@@ -286,7 +285,7 @@ v_ensurance_pay:=dbms_random.value(0,1)*v_ensurance_pay*10;
 v_luggage:=round(dbms_random.value(1,2))*10;
 select number_tickets into v_seat from FLIGHTS where id=v_id_flight;
 v_seat:=dbms_random.value(1,v_seat);
-insert into BOOKING values(v_i,v_id_flight,v_id_passenger,v_final_price,v_ensurance_pay,v_luggage,v_seat);
+insert into BOOKING values(v_id_flight,v_id_passenger,v_final_price,v_ensurance_pay,v_luggage,v_seat);
 end loop;
 
 end;
