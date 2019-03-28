@@ -174,7 +174,7 @@ v_password varchar2(25);
 v_rand_val number(10);
 begin
 DBMS_OUTPUT.PUT_LINE('Inserare 1_000_000 pasageri');
-FOR v_i IN 1..10000 LOOP
+FOR v_i IN 1..1000000 LOOP
 
 v_last_name:=last_names(DBMS_RANDOM.VALUE(1,last_names.count));
 v_rand_val:= DBMS_RANDOM.VALUE(1,2);
@@ -224,7 +224,7 @@ end loop;
 --Bought_cards
 select count(*)into v_count_passengers from passengers;
 select count(*)into v_count_cards from discount_cards;
-for v_i in 1..250 loop
+for v_i in 1..100000 loop
 v_expiration_date:=to_date('2019-07-01','yyyy-mm-dd')+trunc(dbms_random.value(1,365));
 v_id_passenger:=dbms_random.value(1,v_count_passengers);
 v_id_card:=dbms_random.value(1,v_count_cards);
