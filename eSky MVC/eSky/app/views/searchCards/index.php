@@ -1,3 +1,7 @@
+<!-- Done -->
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,14 +35,14 @@
         <div class="container">
             <div class="row">
                 <div class="booking-form">
-                    <form>
+                    <form action="<?php echo URL ?>Cards" method="post">
                         <div class="form-group">
                             <span class="form-label">CNP</span>
                             <input class="form-control" type="text" name="cnp" placeholder="Enter your CNP">
                         </div>
                         <div class="form-group">
                             <span class="form-label">Airline Company</span>
-                            <select class="form-control" id="airlineSelect">
+                            <select class="form-control" id="airlineSelect" name="airport">
                                 <?php echo $data['airports']; ?>
                             </select>
                         </div>

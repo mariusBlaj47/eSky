@@ -1,3 +1,7 @@
+<!-- Done -->
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +34,7 @@
         <div class="container">
             <div class="row">
                 <div class="booking-form">
-                    <form>
+                    <form action="<?php echo URL ?>Test" method="post">
                         <div class="form-group">
                             <span class="form-label">CNP</span>
                             <input class="form-control" type="text" name="cnp" placeholder="Enter your CNP">
@@ -53,12 +57,12 @@
 
                         <div class="form-group">
                             <span class="form-label">Email</span>
-                            <input class="form-control" type="email" placeholder="Enter your email">
+                            <input class="form-control" type="email" name="email" placeholder="Enter your email">
                         </div>
 
                         <div class="form-group">
                             <span class="form-label">Gender</span>
-                            <select class="form-control" id="genderSelect">
+                            <select class="form-control" name="gender" id="genderSelect">
                                 <option>Male</option>
                                 <option>Female</option>
                             </select>
@@ -71,7 +75,7 @@
 
                         <div class="form-group">
                             <span class="form-label">Nationality</span>
-                            <select class="form-control" id="nationalitySelect">
+                            <select class="form-control" name="nationality" id="nationalitySelect">
                                 <option>Romanian</option>
                                 <option>Spanish</option>
                                 <option>Italian</option>
@@ -80,10 +84,10 @@
 
                         <div class="form-group">
                             <span class="form-label">Luggage</span>
-                            <select class="form-control" id="nationalitySelect">
-                                <option>10 (free)</option>
-                                <option>20 (10)</option>
-                                <option>32 (20)</option>
+                            <select class="form-control" name="luggage" id="nationalitySelect">
+                                <option value="0">10 (free)</option>
+                                <option value="10">20 (10)</option>
+                                <option value="20">32 (20)</option>
                             </select>
                         </div>
 

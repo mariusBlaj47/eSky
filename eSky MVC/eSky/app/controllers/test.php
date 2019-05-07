@@ -1,6 +1,6 @@
 <?php
 
-class Cards extends Controller
+class Test extends Controller
 {
     public function index()
     {
