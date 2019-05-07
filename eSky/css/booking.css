@@ -1,0 +1,34 @@
+.p-2
+{
+    background-color: white;
+    border-radius: 15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    
+    
+}
+
+#rt
+{
+    background-color: red;
+    width: 500px;
+    align-content: center;
+}
+
+.p2bd-highlight
+{
+
+}
+.col-sm-5
+{
+    background-color: red;
+    border-radius: 15px;
+}
+.col-sm-2
+{
+    background-color: blue;
+    border-radius: 15px;
+}
+#cinci
+{
+}
