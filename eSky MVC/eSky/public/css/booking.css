@@ -1,0 +1,11 @@
+.form-check-label {
+    color: white;
+}
+
+#rand {
+    height: 1.5em;
+}
+
+.d-flex {
+    justify-content: center !important;
+}
