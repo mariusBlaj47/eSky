@@ -105,7 +105,7 @@
                                         </div>
                                         <div class="p-2 bd-highlight">
                                             <div class="form-check form-check-inline">
-                                                <input class="form-check-input" name="seat" type="radio" id="inlineCheckbox2" value="option2">
+                                                <input class="form-check-input" name="seat" type="radio" id="inlineCheckbox1" value="option2">
                                                 <label class="form-check-label" for="inlineCheckbox2">2</label>
                                             </div>
                                         </div>

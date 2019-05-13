@@ -9,3 +9,6 @@
 .d-flex {
     justify-content: center !important;
 }
+input[type=radio] {
+    transform: scale(2);
+}
