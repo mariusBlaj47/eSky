@@ -27,7 +27,8 @@ BEGIN
   JOIN airports a2
   ON d1.airport_id           =a2.id
   WHERE TRUNC(departure_date)=to_date(leaving_date,'dd-MON-yy')
-  AND a1.name                =departure_airport;
+  AND a1.name                =departure_airport
+  and a2.name=arrival_airports;
   IF(flight_exists           =0)THEN
     RETURN 'not found';
   END IF;
