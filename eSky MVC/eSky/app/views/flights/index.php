@@ -1,9 +1,12 @@
+<!-- Done -->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>Booking</title>
-    <link type="text/css" rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/style.css">
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/flights.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -14,7 +17,8 @@
 <header>
     <nav>
         <div>
-            <h1><a href="<?php echo URL; ?>Home"><img src="<?php echo URL; ?>public/images/logo.png" alt="logo"></a></h1>
+            <h1><a href="<?php echo URL; ?>Home"><img src="<?php echo URL; ?>public/images/logo.png" alt="logo"></a>
+            </h1>
         </div>
         <ul>
             <li><a href="<?php echo URL; ?>Home">Home</a></li>
@@ -25,112 +29,9 @@
         </ul>
     </nav>
 </header>
-<h3 class="text-center" id="title">zboruri dinspre iasi 🠞spre bergamo</h3>
+<h3 class="text-center" id="title"><?php echo $data['header']; ?></h3>
 
-<div class="container">
-    <div class="d-flex flex-column">
-        <div class="p-2">
-            <div class="row">
-                <div class="col-sm-10">
-                    <h4 class="text-center" id="title">wizzzzz</h4>
-
-                    <div class="d-flex justify-content-center flex-row bd-highlight mb-3">
-                        <div class="p-2 bd-highlight" id="rt">
-                            <div class="text-center">ora decolare: 08:05<br>data: 05.06.2019</div>
-                        </div>
-
-                        <div class="p-2 bd-highlight" id="rt">
-                            <div class="text-center">ora aterizare: 09:45<br>data: 05.06.2019</div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-
-                <div class="col-sm-2">
-                    <div class="d-flex flex-column-reverse">
-                        <div class="p-2" id="ccc">
-                            <div class="form-btn">
-                                <button class="submit-btn">Book Now</button>
-                            </div>
-                        </div>
-                        <div class="p-2" id="ccc">
-                            <div class="price">1000</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><div class="p-2">
-            <div class="row">
-                <div class="col-sm-10">
-                    <h4 class="text-center" id="title">wizzzzz</h4>
-
-                    <div class="d-flex justify-content-center flex-row bd-highlight mb-3">
-                        <div class="p-2 bd-highlight" id="rt">
-                            <div class="text-center">ora decolare: 08:05<br>data: 05.06.2019</div>
-                        </div>
-
-                        <div class="p-2 bd-highlight" id="rt">
-                            <div class="text-center">ora aterizare: 09:45<br>data: 05.06.2019</div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-
-                <div class="col-sm-2">
-                    <div class="d-flex flex-column-reverse">
-                        <div class="p-2" id="ccc">
-                            <div class="form-btn">
-                                <button class="submit-btn">Book Now</button>
-                            </div>
-                        </div>
-                        <div class="p-2" id="ccc">
-                            <div class="price">1000</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div><div class="p-2">
-            <div class="row">
-                <div class="col-sm-10">
-                    <h4 class="text-center" id="title">wizzzzz</h4>
-
-                    <div class="d-flex justify-content-center flex-row bd-highlight mb-3">
-                        <div class="p-2 bd-highlight" id="rt">
-                            <div class="text-center">ora decolare: 08:05<br>data: 05.06.2019</div>
-                        </div>
-
-                        <div class="p-2 bd-highlight" id="rt">
-                            <div class="text-center">ora aterizare: 09:45<br>data: 05.06.2019</div>
-                        </div>
-                    </div>
-
-
-
-                </div>
-
-                <div class="col-sm-2">
-                    <div class="d-flex flex-column-reverse">
-                        <div class="p-2" id="ccc">
-                            <div class="form-btn">
-                                <button class="submit-btn">Book Now</button>
-                            </div>
-                        </div>
-                        <div class="p-2" id="ccc">
-                            <div class="price">1000</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
+<?php echo $data['flights'];?>
 </body>
 
 </html>

@@ -12,7 +12,8 @@ class FlightsModel extends Model
         oci_bind_by_name($statement, ':dt', $date);
         oci_bind_by_name($statement, ':rez', $result ,32000);
         oci_execute($statement);
+        $result=substr($result,0,-1);
         $result=explode(';',$result);
-        print_r($result);
+        return $result;
     }
 }
