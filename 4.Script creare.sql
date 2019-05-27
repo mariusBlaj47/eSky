@@ -122,11 +122,10 @@ CONSTRAINT fk_destination_id FOREIGN KEY (airport_id) REFERENCES airports(id)
 /
 
 CREATE TABLE ADMIN(
-ID INT NOT NULL PRIMARY KEY,
+ID INT NOT NULL,
 name VARCHAR2(25) NOT NULL,
 PASSWORD VARCHAR2(25) NOT NULL,
-CONSTRAINT fk_admin_id FOREIGN KEY(ID) REFERENCES airlines(id),
-CONSTRAINT fk_admin_name FOREIGN KEY(name) REFERENCES airlines(name)
+CONSTRAINT fk_admin_id FOREIGN KEY(ID) REFERENCES airlines(id)
 )
 /
 
@@ -151,7 +150,7 @@ airline_names vc_arr:=vc_arr('Wizz Air','Blue Air','Ryanair','Turkish Airlines',
 v_airline_name varchar2(40);
 
 --Airport
-airport_names vc_arr:=vc_arr('Henri Coanda International Airport','Iasi International Airport','Avram Iancu International Airport Cluj','Orio al Serio International Airport','Malpensa Airport','Dublin Airport','Brussels Airport','Charles de Gaulle Airport','Barcelona�El Prat Airport','Lisbon Portela Airport','London City Airport','Sofia International Airport','Haneda Airport','John F. Kennedy International Airport','Toronto Pearson International Airport');
+airport_names vc_arr:=vc_arr('Henri Coanda International Airport','Iasi International Airport','Avram Iancu International Airport Cluj','Orio al Serio International Airport','Malpensa Airport','Dublin Airport','Brussels Airport','Charles de Gaulle Airport','Barcelona El Prat Airport','Lisbon Portela Airport','London City Airport','Sofia International Airport','Haneda Airport','John F. Kennedy International Airport','Toronto Pearson International Airport');
 airport_cities vc_arr:=vc_arr('Bucharest','Iasi','Cluj-Napoca','Milan','Milan','Dublin','Brussel','Paris','Barcelona','Lisbon','London','Sofia','Tokyo','New York City','Mississauga');
 airport_countries vc_arr:=vc_arr('Romania','Romania','Romania','Italia','Italia','Ireland','Belgium','France','Spain','Portugal','United Kingdom','Bulgaria','Japan','New York','Canada');
 
@@ -224,7 +223,7 @@ DBMS_OUTPUT.PUT_LINE('Inseram '|| airline_names.count||' firme de zbor');
 FOR v_i IN 1..airline_names.count LOOP
 v_airline_name:=airline_names(v_i);
 insert into AIRLINES values(v_i,v_airline_name);
-insert into ADMIN values(v_i,to_lower(replace(v_airline_name,' ','_')),v_i||to_lower(replace(v_airline_name,' ','_')));
+insert into ADMIN values(v_i,lower(replace(v_airline_name,' ','_')),v_i||lower(replace(v_airline_name,' ','_')));
 end loop;
 --Airport
 DBMS_OUTPUT.PUT_LINE('Inseram '|| airport_names.count||' aeroporturi');
@@ -278,7 +277,7 @@ v_ensurance:=dbms_random.value(30,80);
 insert into FLIGHTS values(v_i,v_departure_date,v_arrival_date,v_base_price,v_tickets,v_ensurance);
 insert into ADMINISTRATION values(v_i,v_airline_id);
 insert into ORIGIN values(v_i,v_airport_id);
-insert into ORIGIN values(v_i,v_airport_id2);
+insert into DESTINATION values(v_i,v_airport_id2);
 end loop;
 --Booking
 select count(*) into v_count_flight from FLIGHTS;
