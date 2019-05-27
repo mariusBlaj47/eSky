@@ -5,6 +5,18 @@ BEGIN
   OPEN c1 FOR SELECT * FROM airports order by name;
 END ;
 /
+
+create or replace PROCEDURE getUser(
+    c1 OUT SYS_REFCURSOR,
+    username IN admin.name%type,
+    pass   IN admin.password%type)
+IS
+BEGIN
+  OPEN c1 FOR SELECT * FROM admin where name=username and pass=admin.password;
+END ;
+/
+
+
 create or replace FUNCTION getFlights(
     departure_airport IN airports.name%type,
     arrival_airport   IN airports.name%type,
@@ -132,14 +144,4 @@ LOOP
 END LOOP;
 RETURN info;
 END;
-/
-
-create or replace PROCEDURE getUser(
-    c1 OUT SYS_REFCURSOR,
-    username IN admin.name%type,
-    pass   IN admin.password%type)
-IS
-BEGIN
-  OPEN c1 FOR SELECT * FROM admin where name=username and pass=admin.password;
-END ;
 /
