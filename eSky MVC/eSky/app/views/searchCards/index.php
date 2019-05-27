@@ -6,7 +6,7 @@
 <html lang="en">
 
 <head>
-    <title>eSky</title>
+    <title>Search for discount cards</title>
     <link type="text/css" rel="stylesheet" href="<?php echo URL ?>public/css/bootstrap.min.css" />
     <link rel="stylesheet" href="<?php echo URL ?>public/css/style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,7 +28,7 @@
     </nav>
 </header>
 
-<h2 class="text-center" id="title">Search for cards</h2>
+<h2 class="text-center" id="title">Search for discount cards</h2>
 
 <div id="booking" class="section">
     <div class="section-center">

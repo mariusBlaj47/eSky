@@ -5,7 +5,7 @@
 <html lang="en">
 
 <head>
-    <title>Booking</title>
+    <title>Flights</title>
     <link type="text/css" rel="stylesheet" href="<?php echo URL; ?>public/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/style.css">
     <link rel="stylesheet" href="<?php echo URL; ?>public/css/flights.css">
