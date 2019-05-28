@@ -277,3 +277,28 @@ end;
 
 
 
+
+create or replace PROCEDURE getFlightDataByAirline(
+    c1 OUT SYS_REFCURSOR,
+    in_airline_id IN airlines.id%type)
+IS
+BEGIN
+    OPEN c1 FOR SELECT f.id,
+                       TO_CHAR(f.departure_date,'dd-mm-yyyy') as "DEPARTURE_DATE",
+                       TO_CHAR(f.arrival_date,'dd-mm-yyyy') as "ARRIVAL_DATE",
+                       TO_CHAR(f.departure_date,'HH24:MM') as "DEPARTURE_HOUR",
+                       TO_CHAR(f.departure_date,'HH24:MM') as "ARRIVAL_HOUR",
+                       f.base_price,
+                       a1.name as "DEPARTURE_AIRPORT",
+                       a2.name as "ARRIVAL_AIRPORT"
+                FROM flights f join
+                     administration a on f.id=a.flight_id join
+                     origin o on o.flight_id=f.id join airports a1 on a1.id=o.airport_id join
+                     destination d on d.flight_id=f.id join airports a2 on a2.id=d.airport_id
+                where a.airline_id=in_airline_id;
+END ;
+/
+
+
+
+

@@ -45,4 +45,19 @@ class FlightsModel extends Model
 
     public function addFlight()
     {}
+
+    public function getFlightsByAirline($id)
+    {
+        $result = array();
+        $c1 = oci_new_cursor($this->database);
+        $statement = oci_parse($this->database, "begin getFlightDataByAirline(:cursor,:id); end;");
+        oci_bind_by_name($statement, ":cursor", $c1, -1, OCI_B_CURSOR);
+        oci_bind_by_name($statement,':id',$id);
+        oci_execute($statement);
+        oci_execute($c1);
+        while (($row = oci_fetch_array($c1, OCI_ASSOC + OCI_RETURN_NULLS)) != false) {
+            array_push($result, $row);
+        }
+        return $result;
+    }
 }

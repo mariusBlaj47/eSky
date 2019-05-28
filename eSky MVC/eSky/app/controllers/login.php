@@ -32,7 +32,7 @@ class Login extends Controller
     public function logout()
     {
         session_start();
-        unset($_POST['id']);
+        unset($_SESSION['id']);
         header('Location: ' . URL . 'Home');
     }
 }

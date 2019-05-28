@@ -15,6 +15,7 @@ class addFlight extends Controller
         {
             $data['airports'] = $data['airports'] . '<option>'.$airport.'</option>';
         }
+        $data['header']=$this->getAdminHeader();
         $this->view('addFlight/index',$data);
     }
     public function add()

@@ -34,6 +34,7 @@ class Controller
         $header = $header . '<ul>';
         $header = $header . '<li><a href = "' . URL . 'addFlight" > Add Flight</a></li>';
         $header = $header . '<li><a href = "' . URL . 'addCard" > Add Card</a></li>';
+        $header = $header . '<li><a href = "' . URL . 'seeFlights" > See Flights</a></li>';
         $header = $header . '<li><a href = "' . URL . 'Login/logout" > LogOut</a></li>';
         $header = $header . '</ul>';
         return $header;
