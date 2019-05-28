@@ -150,3 +150,8 @@ p{
     padding-left: 20px;
     color: #9CAFB7;
 }
+
+body
+{
+    background-color: rgba(0,0,0,0.8);
+}

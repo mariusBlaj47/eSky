@@ -31,4 +31,15 @@ class FlightsModel extends Model
         }
         return $result;
     }
+
+    public function getDiscountedPrice($cnp,$flightId)
+    {
+        $sql = "BEGIN :rez := getDiscountedPrice(:cnp,:id); END;";
+        $statement = oci_parse($this->database, $sql);
+        oci_bind_by_name($statement, ':cnp', $cnp);
+        oci_bind_by_name($statement, ':id', $flightId);
+        oci_bind_by_name($statement, ':rez', $result,32000);
+        oci_execute($statement);
+        return $result;
+    }
 }

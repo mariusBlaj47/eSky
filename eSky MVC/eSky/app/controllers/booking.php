@@ -19,7 +19,6 @@ class Booking extends Controller
         $counter = 1;
         foreach ($flightsIds as $flightId) {
             $result = $flight_model->getFlightData($flightId);
-            print_r($result);
             $data['ensurance'] += $result[0]['ENSURANCE_PRICE'];
             $seats = $result[0]['NUMBER_TICKETS'];
             if ($counter == 1) {
