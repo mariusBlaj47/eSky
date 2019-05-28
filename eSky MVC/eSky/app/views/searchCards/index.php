@@ -38,11 +38,11 @@
                     <form action="<?php echo URL ?>Cards" method="post">
                         <div class="form-group">
                             <span class="form-label">CNP</span>
-                            <input class="form-control" type="text" name="cnp" placeholder="Enter your CNP">
+                            <input class="form-control" type="number" name="cnp" placeholder="Enter your CNP" required>
                         </div>
                         <div class="form-group">
                             <span class="form-label">Airline Company</span>
-                            <select class="form-control" id="airlineSelect" name="airport">
+                            <select class="form-control" id="airlineSelect" name="airline">
                                 <?php echo $data['airports']; ?>
                             </select>
                         </div>

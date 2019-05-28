@@ -4,8 +4,8 @@ class Home extends Controller
 {
     public function index()
     {
-        $airlines_model = $this->loadModel('AirlinesModel');
-        $airports = $airlines_model->getAirports();
+        $airports_model = $this->loadModel('AirportsModel');
+        $airports = $airports_model->getAirports();
         $data['airports']="";
         foreach (array_values($airports) as $airport)
         {

@@ -3,13 +3,28 @@
 
 class CardsModel extends Model
 {
-    public function test()
+    public function getCardsByAirline($airline)
     {
-        $query = 'begin test1 (:bind1); end;';
-        $s = oci_parse($this->database, $query);
-        oci_bind_by_name($s, ':bind1', $result,40);
-        oci_execute($s);
+        $result = array();
+        $c1 = oci_new_cursor($this->database);
+        $statement = oci_parse($this->database, "begin getCardsByAirline(:cursor,:p1); end;");
+        oci_bind_by_name($statement, ":cursor", $c1, -1, OCI_B_CURSOR);
+        oci_bind_by_name($statement,':p1',$airline);
+        oci_execute($statement);
+        oci_execute($c1);  // Execute the REF CURSOR like a normal statement id
+        while (($row = oci_fetch_array($c1, OCI_ASSOC + OCI_RETURN_NULLS)) != false) {
+            array_push($result, $row);
+        }
         return $result;
+    }
+
+    public function addCard($cnp,$cardId)
+    {
+        $sql = "begin buy_card(:p1,:p2); end;";
+        $statement = oci_parse($this->database, $sql);
+        oci_bind_by_name($statement, ':p1', $cnp);
+        oci_bind_by_name($statement, ':p2', $cardId);
+        oci_execute($statement);
     }
 }
 
