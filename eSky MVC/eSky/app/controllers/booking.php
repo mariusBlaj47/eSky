@@ -51,7 +51,7 @@ class Booking extends Controller
             }
             $counter++;
         }
-
+        $data['header']=$this->getClientHeader();
         $this->view('booking/index', $data);
     }
 

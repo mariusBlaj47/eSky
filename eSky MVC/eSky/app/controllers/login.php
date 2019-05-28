@@ -4,6 +4,9 @@ class Login extends Controller
 {
     public function index()
     {
+        session_start();
+        if(isset($_SESSION['id']))
+            header('Location: ' . URL . 'addFlight');
         $this->view('login/index');
     }
 
@@ -24,5 +27,12 @@ class Login extends Controller
                 header('Location: ' . URL . 'Login');
             }
         }
+    }
+
+    public function logout()
+    {
+        session_start();
+        unset($_POST['id']);
+        header('Location: ' . URL . 'Home');
     }
 }

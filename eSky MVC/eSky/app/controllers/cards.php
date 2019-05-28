@@ -14,6 +14,7 @@ class Cards extends Controller
             $data['cards']=$data['cards'] . $this->createCard($_POST['cnp'],$item['ID'],$item['NAME'],$item['DISCOUNT'],$item['VALIDITY'],$item['PRICE']);
         }
         $data['airline'] = $_POST['airline'];
+        $data['header']=$this->getClientHeader();
         $this->view('cards/index',$data);
     }
 

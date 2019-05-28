@@ -11,6 +11,7 @@ class Home extends Controller
         {
             $data['airports'] = $data['airports'] . '<option>'.$airport.'</option>';
         }
+        $data['header']=$this->getClientHeader();
         $this->view('home/index',$data);
     }
 

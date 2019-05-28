@@ -11,6 +11,7 @@ class searchCards extends Controller
         {
             $data['airports'] = $data['airports'] . '<option name="'.$airport.'">'.$airport.'</option>';
         }
+        $data['header']=$this->getClientHeader();
         $this->view('searchCards/index',$data);
     }
 }

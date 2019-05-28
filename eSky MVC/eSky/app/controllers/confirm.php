@@ -4,7 +4,6 @@ class Confirm extends Controller
 {
     public function index()
     {
-        print_r(($_POST));
         if (isset($_POST['cnp']) && isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['gender']) && isset($_POST['birth_date']) && isset($_POST['nationality']) && isset($_POST['luggage']) && isset($_POST['ensurance']) && isset($_POST['seat1']) && isset($_POST['flightIds'])) {
             $flights = explode(',', $_POST['flightIds']);
             $flights_model = $this->loadModel('FlightsModel');
@@ -16,6 +15,17 @@ class Confirm extends Controller
                 $price += $this_flight_price;
                 $data['postData'] = $data['postData'] .'<input type="hidden" name="final_price'.$counter.'" value="' . $this_flight_price . '">';
                 $counter++;
+            }
+            $price+=$_POST['ensurance'];
+            switch ($_POST['luggage']) {
+                case 20:
+                    $price += 10;
+                    break;
+                case 32:
+                    $price+=20;
+                    break;
+                default:
+                    break;
             }
             $data['price'] = $price;
 
@@ -33,6 +43,7 @@ class Confirm extends Controller
             if (isset($_POST['seat2']))
                 $data['postData'] = $data['postData'] . '<input type="hidden" name="seat2" value="' . $_POST['seat2'] . '">';
         } else header('Location: ' . URL . 'Home');
+        $data['header']=$this->getClientHeader();
         $this->view('confirm/index', $data);
     }
 

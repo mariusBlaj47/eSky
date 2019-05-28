@@ -4,6 +4,7 @@ class Confirmed extends Controller
 {
     public function index()
     {
-        $this->view('confirmed/index');
+        $data['header']=$this->getClientHeader();
+        $this->view('confirmed/index',$data);
     }
 }

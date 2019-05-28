@@ -16,17 +16,7 @@
 <body>
 <header>
     <nav>
-        <div>
-            <h1><a href="<?php echo URL; ?>Home"><img src="<?php echo URL; ?>public/images/logo.png" alt="logo"></a>
-            </h1>
-        </div>
-        <ul>
-            <li><a href="<?php echo URL; ?>Home">Home</a></li>
-            <li><a href="#">Our Services</a></li>
-            <li><a href="#">Design</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
+        <?php echo $data['header'];?>
     </nav>
 </header>
 <h3 class="text-center" id="title">Cards for <?php echo $data['airline'];?></h3>

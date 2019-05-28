@@ -25,6 +25,7 @@ class Flights extends Controller
             }
             $data['flights'] = $data['flights'] . '</div></div>';
         }
+        $data['nav']=$this->getClientHeader();
         $this->view('flights/index', $data);
     }
 

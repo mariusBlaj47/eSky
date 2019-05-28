@@ -16,17 +16,7 @@
 <body>
 <header>
     <nav>
-        <div>
-            <h1><a href="<?php echo URL; ?>Home"><img src="<?php echo URL; ?>public/images/logo.png" alt="logo"></a>
-            </h1>
-        </div>
-        <ul>
-            <li><a href="<?php echo URL; ?>Home">Home</a></li>
-            <li><a href="#">Our Services</a></li>
-            <li><a href="#">Design</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
+        <?php echo $data['header'];?>
     </nav>
 </header>
 <div id="booking" class="section">
@@ -37,14 +27,14 @@
                     <form action="<?php echo URL ?>Confirm" method="post">
                         <div class="form-group">
                             <span class="form-label">CNP</span>
-                            <input class="form-control" type="text" name="cnp" placeholder="Enter your CNP">
+                            <input class="form-control" type="number" name="cnp" placeholder="Enter your CNP" required>
                         </div>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
                                     <span class="form-label">First Name</span>
                                     <input class="form-control" type="text" name="first_name"
-                                           placeholder="Enter your first name">
+                                           placeholder="Enter your first name" required>
                                 </div>
                             </div>
 
@@ -52,14 +42,14 @@
                                 <div class="form-group">
                                     <span class="form-label">Last name</span>
                                     <input class="form-control" type="text" name="last_name"
-                                           placeholder="Enter your last name">
+                                           placeholder="Enter your last name" required>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <span class="form-label">Email</span>
-                            <input class="form-control" type="email" name="email" placeholder="Enter your email">
+                            <input class="form-control" type="email" name="email" placeholder="Enter your email" required>
                         </div>
 
                         <div class="form-group">
@@ -87,9 +77,9 @@
                         <div class="form-group">
                             <span class="form-label">Luggage</span>
                             <select class="form-control" name="luggage" id="luggageSelect">
-                                <option value="0">10 (free)</option>
-                                <option value="10">20 (10)</option>
-                                <option value="20">32 (20)</option>
+                                <option value="10">10 (free)</option>
+                                <option value="20">20 (10€)</option>
+                                <option value="32">32 (20€)</option>
                             </select>
                         </div>
 
