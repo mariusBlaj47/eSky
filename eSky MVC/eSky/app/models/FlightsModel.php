@@ -42,4 +42,7 @@ class FlightsModel extends Model
         oci_execute($statement);
         return $result;
     }
+
+    public function addFlight()
+    {}
 }
