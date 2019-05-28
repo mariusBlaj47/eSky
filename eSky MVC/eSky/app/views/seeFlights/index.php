@@ -21,6 +21,7 @@
 </header>
 
 <?php echo $data['flights'];?>
+<h3 class="text-center" id="page"><?php echo $data['page']; ?></h3>
 </body>
 
 </html>

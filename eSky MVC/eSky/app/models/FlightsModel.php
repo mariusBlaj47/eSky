@@ -55,9 +55,12 @@ class FlightsModel extends Model
         oci_bind_by_name($statement,':id',$id);
         oci_execute($statement);
         oci_execute($c1);
+        $counter=0;
         while (($row = oci_fetch_array($c1, OCI_ASSOC + OCI_RETURN_NULLS)) != false) {
             array_push($result, $row);
+            $counter++;
         }
+        $result['count']=$counter;
         return $result;
     }
 }

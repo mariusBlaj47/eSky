@@ -2,7 +2,7 @@
 
 class Flights extends Controller
 {
-    public function index()
+    public function index($page=1)
     {
         if (isset($_POST['origin']) && isset($_POST['destination']) && isset($_POST['date'])) {
             $origin = $_POST['origin'];
@@ -20,10 +20,19 @@ class Flights extends Controller
             $data['header']=$origin.' 🠞 '.$destination;
             $data['flights'] = '';
             $data['flights'] = $data['flights'] . '<div class="container"><div class="d-flex flex-column">';
+            $counter=0;
             foreach ($flights as $flight) {
+                $counter++;
+                if(($page-1)*10<$counter && $counter<=$page*10)
                 $data['flights'] = $data['flights'] . $this->createFlight($flight);
             }
             $data['flights'] = $data['flights'] . '</div></div>';
+            $data['page']='';
+            if($page>1)
+                $data['page']=$data['page'].'<a href="'.URL.'Flights/index/'.($page-1).'">Previous Page </a>';
+            $data['page']=$data['page'].'Current page : '.$page;
+            if($page<floatval($counter/10))
+                $data['page']=$data['page'].'<a href="'.URL.'Flights/index/'.($page+1).'"> Next Page</a>';
         }
         $data['nav']=$this->getClientHeader();
         $this->view('flights/index', $data);

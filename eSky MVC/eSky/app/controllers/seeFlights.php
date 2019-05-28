@@ -2,7 +2,7 @@
 
 class seeFlights extends Controller
 {
-    public function index()
+    public function index($page=1)
     {
         session_start();
         if (!isset($_SESSION['id']))
@@ -10,12 +10,25 @@ class seeFlights extends Controller
         $flights_model = $this->loadModel('FlightsModel');
         $id = $_SESSION['id'][0];
         $flights = $flights_model->getFlightsByAirline($id);
+        if($page>floatval($flights['count']/10)+1)
+            header('Location: ' . URL . 'seeFlights/index/1');
         $data['flights'] = '';
         $data['flights'] = $data['flights'] . '<div class="container"><div class="d-flex flex-column">';
+        $counter=0;
         foreach ($flights as $flight) {
-            $data['flights'] = $data['flights'] . $this->createFlight($flight);
+            $counter++;
+            if(($page-1)*10<$counter && $counter<=$page*10) {
+                if($flight!=$flights['count'])
+                $data['flights'] = $data['flights'] . $this->createFlight($flight);
+            }
         }
         $data['flights'] = $data['flights'] . '</div></div>';
+        $data['page']='';
+        if($page>1)
+            $data['page']=$data['page'].'<a href="'.URL.'seeFlights/index/'.($page-1).'">Previous Page </a>';
+        $data['page']=$data['page'].'Current page : '.$page;
+        if($page<floatval($flights['count']/10))
+            $data['page']=$data['page'].'<a href="'.URL.'seeFlights/index/'.($page+1).'"> Next Page</a>';
         $data['header'] = $this->getAdminHeader();
         $this->view('seeFlights/index', $data);
     }
