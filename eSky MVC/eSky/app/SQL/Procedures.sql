@@ -230,3 +230,50 @@ end;
 
 
 
+
+create or replace PROCEDURE getAirlines(
+    c1 OUT SYS_REFCURSOR)
+IS
+BEGIN
+    OPEN c1 FOR SELECT * FROM airlines order by name;
+END ;
+/
+
+
+
+
+
+create or replace PROCEDURE getCardsByAirline(
+    c1 OUT SYS_REFCURSOR,
+    airlineName IN airlines.name%type)
+IS
+BEGIN
+    OPEN c1 FOR SELECT d.* FROM discount_cards d join offer o on o.card_id=d.id join airlines a on a.id=o.airline_id where a.name=airlineName;
+END ;
+/
+
+
+
+
+create or replace procedure buy_card(
+    in_cnp IN passengers.cnp%type,
+    in_card IN discount_cards.id%type
+)
+as
+    v_expiration_date date;
+    v_pass_id passengers.id%type;
+begin
+    begin
+        select id into v_pass_id from passengers where cnp=in_cnp;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN;
+    end;
+    select (sysdate+validity) into v_expiration_date from discount_cards where id=in_card;
+    insert into bought_card values(v_pass_id,in_card,v_expiration_date);
+end;
+/
+
+
+
+

@@ -1,13 +1,13 @@
 <?php
 
 
-class AirlinesModel extends Model
+class AirportsModel extends Model
 {
-    public function getAirlines()
+    public function getAirports()
     {
         $result = array();
         $c1 = oci_new_cursor($this->database);
-        $statement = oci_parse($this->database, "begin getAirlines(:cursor); end;");
+        $statement = oci_parse($this->database, "begin getAirports(:cursor); end;");
         oci_bind_by_name($statement, ":cursor", $c1, -1, OCI_B_CURSOR);
         oci_execute($statement);
         oci_execute($c1);  // Execute the REF CURSOR like a normal statement id

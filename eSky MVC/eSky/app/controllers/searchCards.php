@@ -5,7 +5,7 @@ class searchCards extends Controller
     public function index()
     {
         $airlines_model = $this->loadModel('AirlinesModel');
-        $airports = $airlines_model->getAirports();
+        $airports = $airlines_model->getAirlines();
         $data['airports']="";
         foreach (array_values($airports) as $airport)
         {

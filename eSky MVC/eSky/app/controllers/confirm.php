@@ -4,6 +4,7 @@ class Confirm extends Controller
 {
     public function index()
     {
+        print_r(($_POST));
         if (isset($_POST['cnp']) && isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['email']) && isset($_POST['gender']) && isset($_POST['birth_date']) && isset($_POST['nationality']) && isset($_POST['luggage']) && isset($_POST['ensurance']) && isset($_POST['seat1']) && isset($_POST['flightIds'])) {
             $flights = explode(',', $_POST['flightIds']);
             $flights_model = $this->loadModel('FlightsModel');
