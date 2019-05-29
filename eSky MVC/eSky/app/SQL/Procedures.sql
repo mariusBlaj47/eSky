@@ -310,6 +310,63 @@ is
 
 
 end Client;
+/
 
 
+
+  create or replace procedure seePassenger(
+  c1 OUT SYS_REFCURSOR,
+  in_flight_id IN flights.id%type
+  )
+  as
+  
+  begin
+      OPEN c1 FOR SELECT cnp,first_name||' '||last_name,ensurance from passengers p join booking b on p.id=b.PASSENGER_ID;
+  end;
+/
+
+
+
+create or replace procedure addFlight(
+    in_origin IN airports.name%type,
+    in_destination IN airports.name%type,
+    in_departure_date IN varchar2,
+    in_arrival_date IN varchar2,
+    in_base_price IN flights.base_price%type,
+    in_number_tickets IN flights.number_tickets%type,
+    in_ensurance_price IN flights.ensurance_price%type,
+    in_airline_id IN administration.airline_id%type
+    )
+as
+v_fl_id origin.flight_id%type;
+v_or_id airports.id%type;
+v_de_id airports.id%type;
+begin
+    select count(*)+1 into v_fl_id from flights;
+    select id into v_or_id from airports
+    where name=in_origin;
+    select id into v_de_id from airports
+    where name=in_destination;
+    insert into flights values(v_fl_id,to_date(in_departure_date,'dd-MON-yy HH24:MI'),to_date(in_arrival_date,'dd-MON-yy HH24:MI'),in_base_price,in_number_tickets,in_ensurance_price);
+    insert into administration values(v_fl_id,in_airline_id);
+    insert into origin values(v_fl_id,v_or_id);
+    insert into destination values(v_fl_id,v_de_id);
+    commit;
+end;
+/
+
+
+create or replace procedure addCard(
+    in_card IN discount_cards.name%type,
+    in_discount IN discount_cards.discount%type,
+    in_price IN discount_cards.price%type,
+    in_validity IN discount_cards.validity%type
+    )
+as
+v_card_id discount_cards.id%type;
+begin
+    select count(*)+1 into v_card_id from discount_cards;
+    insert into discount_cards values(v_card_id,in_card,in_discount,in_price,in_validity);
+end;
+/
 
