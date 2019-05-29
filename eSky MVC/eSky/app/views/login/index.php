@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo URL ?>public/css/loginForm.css">
-    <title>KiMo</title>
 </head>
 <body>
 <div class="container" data-tab="login">

@@ -20,7 +20,6 @@ class addFlight extends Controller
     }
     public function add()
     {
-        print_r($_POST);
         session_start();
         if(!isset($_SESSION['id']))
             header('Location: ' . URL . 'Home');
@@ -40,7 +39,10 @@ class addFlight extends Controller
                     $date2 = date('d-M-y', strtotime($_POST['date2'])) . ' ' . $_POST['hour2'] . ':' . $_POST['min2'];
                 }
             else $date2 = date('d-M-y', strtotime($_POST['date2'])) . ' ' . $_POST['hour2'] . ':' . $_POST['min2'];
-            print_r($date1);
+            $flight_model=$this->loadModel('flightsmodel');
+            $id = $_SESSION['id'][0];
+            $flight_model->addFlight($_POST['origin'],$_POST['destination'],$date1,$date2,$_POST['price'],$_POST['ensurance'],$_POST['seat'],$id);
+            header('Location: ' . URL . 'addFlight');
         }
     }
 }

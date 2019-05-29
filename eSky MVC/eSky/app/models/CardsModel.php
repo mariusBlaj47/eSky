@@ -26,6 +26,17 @@ class CardsModel extends Model
         oci_bind_by_name($statement, ':p2', $cardId);
         oci_execute($statement);
     }
+    public function addAcard($card,$discount,$price,$validity)
+    {
+        $sql = "begin addCard(:p1,:p2,:p3,:p4); end;";
+        $statement = oci_parse($this->database, $sql);
+        oci_bind_by_name($statement, ':p1', $card);
+        oci_bind_by_name($statement, ':p2', $discount);
+        oci_bind_by_name($statement, ':p3', $price);
+        oci_bind_by_name($statement, ':p4', $validity);
+        oci_execute($statement);
+    }
+
 }
 
 

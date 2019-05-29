@@ -43,8 +43,20 @@ class FlightsModel extends Model
         return $result;
     }
 
-    public function addFlight()
-    {}
+    public function addFlight($origin,$destination,$date1,$date2,$price,$ensurance,$seat,$id)
+    {
+        $sql = "begin addflight(:p1,:p2,:p3,:p4,:p5,:p6,:p7,:p8); end;";
+        $statement = oci_parse($this->database, $sql);
+        oci_bind_by_name($statement, ':p1', $origin);
+        oci_bind_by_name($statement, ':p2', $destination);
+        oci_bind_by_name($statement, ':p3', $date1);
+        oci_bind_by_name($statement, ':p4', $date2);
+        oci_bind_by_name($statement, ':p5', $price);
+        oci_bind_by_name($statement, ':p6', $ensurance);
+        oci_bind_by_name($statement, ':p7', $seat);
+        oci_bind_by_name($statement, ':p8', $id);
+        oci_execute($statement);
+    }
 
     public function getFlightsByAirline($id)
     {
