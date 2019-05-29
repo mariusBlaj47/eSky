@@ -7,7 +7,7 @@ class CardsModel extends Model
     {
         $result = array();
         $c1 = oci_new_cursor($this->database);
-        $statement = oci_parse($this->database, "begin getCardsByAirline(:cursor,:p1); end;");
+        $statement = oci_parse($this->database, "begin Client.getCardsByAirline(:cursor,:p1); end;");
         oci_bind_by_name($statement, ":cursor", $c1, -1, OCI_B_CURSOR);
         oci_bind_by_name($statement,':p1',$airline);
         oci_execute($statement);
@@ -20,7 +20,7 @@ class CardsModel extends Model
 
     public function addCard($cnp,$cardId)
     {
-        $sql = "begin buy_card(:p1,:p2); end;";
+        $sql = "begin Client.buy_card(:p1,:p2); end;";
         $statement = oci_parse($this->database, $sql);
         oci_bind_by_name($statement, ':p1', $cnp);
         oci_bind_by_name($statement, ':p2', $cardId);

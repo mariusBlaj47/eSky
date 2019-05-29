@@ -6,7 +6,7 @@ class AdminModel extends Model
     {
         $result = array();
         $c1 = oci_new_cursor($this->database);
-        $statement = oci_parse($this->database, "begin getUser(:cursor,:user,:password); end;");
+        $statement = oci_parse($this->database, "begin Client.getUser(:cursor,:user,:password); end;");
         oci_bind_by_name($statement, ":cursor", $c1, -1, OCI_B_CURSOR);
         oci_bind_by_name($statement,':user',$username);
         oci_bind_by_name($statement, ':password',$password );

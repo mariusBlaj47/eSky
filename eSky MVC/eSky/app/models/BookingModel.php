@@ -4,7 +4,7 @@ class BookingModel extends Model
 {
     public function createBooking($cnp, $fname, $lname, $gender, $bday, $nationality, $email, $flightId, $price, $ensurance, $luggage, $seat)
     {
-        $sql = "begin create_booking(:p1,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12); end;";
+        $sql = "begin Client.create_booking(:p1,:p2,:p3,:p4,:p5,:p6,:p7,:p8,:p9,:p10,:p11,:p12); end;";
         $statement = oci_parse($this->database, $sql);
         oci_bind_by_name($statement, ':p1', $cnp);
         oci_bind_by_name($statement, ':p2', $fname);
