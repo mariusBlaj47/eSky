@@ -5,7 +5,7 @@ class FlightsModel extends Model
 {
     public function getFlights($origin,$destination,$date)
     {
-        $sql = "BEGIN :rez := getFlights(:or,:ds,:dt); END;";
+        $sql = "BEGIN :rez := Client.getFlights(:or,:ds,:dt); END;";
         $statement = oci_parse($this->database, $sql);
         oci_bind_by_name($statement, ':or', $origin);
         oci_bind_by_name($statement, ':ds', $destination);
@@ -21,7 +21,7 @@ class FlightsModel extends Model
     {
         $result = array();
         $c1 = oci_new_cursor($this->database);
-        $statement = oci_parse($this->database, "begin getFlightData(:cursor,:id); end;");
+        $statement = oci_parse($this->database, "begin Client.getFlightData(:cursor,:id); end;");
         oci_bind_by_name($statement, ":cursor", $c1, -1, OCI_B_CURSOR);
         oci_bind_by_name($statement,':id',$flightId);
         oci_execute($statement);
@@ -34,7 +34,7 @@ class FlightsModel extends Model
 
     public function getDiscountedPrice($cnp,$flightId)
     {
-        $sql = "BEGIN :rez := getDiscountedPrice(:cnp,:id); END;";
+        $sql = "BEGIN :rez := Client.getDiscountedPrice(:cnp,:id); END;";
         $statement = oci_parse($this->database, $sql);
         oci_bind_by_name($statement, ':cnp', $cnp);
         oci_bind_by_name($statement, ':id', $flightId);
@@ -62,7 +62,7 @@ class FlightsModel extends Model
     {
         $result = array();
         $c1 = oci_new_cursor($this->database);
-        $statement = oci_parse($this->database, "begin getFlightDataByAirline(:cursor,:id); end;");
+        $statement = oci_parse($this->database, "begin Client.getFlightDataByAirline(:cursor,:id); end;");
         oci_bind_by_name($statement, ":cursor", $c1, -1, OCI_B_CURSOR);
         oci_bind_by_name($statement,':id',$id);
         oci_execute($statement);
